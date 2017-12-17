@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <paths>
+        <files-path
+            name="images"
+            path="表情包生成器" />
+
+        <external-path
+            name="external_images"
+            path="Android/data/com.android.emoticoncreater/files/表情包生成器" />
+
+    </paths>
+</resources>

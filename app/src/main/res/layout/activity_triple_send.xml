@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/rootview"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <android.support.design.widget.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:theme="@style/AppTheme.AppBarOverlay">
+
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="?attr/colorPrimary"
+            app:popupTheme="@style/AppTheme.PopupOverlay"
+            app:titleTextColor="@android:color/white" />
+
+    </android.support.design.widget.AppBarLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center_horizontal"
+        android:orientation="vertical"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:background="@color/white">
+
+            <EditText
+                android:id="@+id/et_title"
+                android:layout_width="300dp"
+                android:layout_height="25dp"
+                android:layout_centerHorizontal="true"
+                android:background="@null"
+                android:gravity="center"
+                android:hint="标题"
+                android:imeOptions="actionDone"
+                android:inputType="text"
+                android:maxLength="10"
+                android:maxLines="1"
+                android:textColor="@color/black"
+                android:textSize="@dimen/textsize_14" />
+
+            <ImageView
+                android:id="@+id/iv_picture1"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_alignStart="@+id/et_title"
+                android:layout_below="@+id/et_title"
+                android:background="@drawable/btn_plus"
+                android:scaleType="centerCrop" />
+
+            <ImageView
+                android:id="@+id/iv_picture2"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_below="@+id/et_title"
+                android:layout_toEndOf="@+id/iv_picture1"
+                android:background="@drawable/btn_plus"
+                android:scaleType="centerCrop" />
+
+            <ImageView
+                android:id="@+id/iv_picture3"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_below="@+id/et_title"
+                android:layout_toEndOf="@+id/iv_picture2"
+                android:background="@drawable/btn_plus"
+                android:scaleType="centerCrop" />
+
+            <EditText
+                android:id="@+id/et_name1"
+                android:layout_width="wrap_content"
+                android:layout_height="25dp"
+                android:layout_alignEnd="@+id/iv_picture1"
+                android:layout_alignStart="@+id/iv_picture1"
+                android:layout_below="@+id/iv_picture1"
+                android:background="@null"
+                android:gravity="center"
+                android:hint="第一句话"
+                android:imeOptions="actionDone"
+                android:inputType="text"
+                android:maxLength="5"
+                android:maxLines="1"
+                android:textColor="@color/black"
+                android:textSize="@dimen/textsize_14" />
+
+            <EditText
+                android:id="@+id/et_name2"
+                android:layout_width="wrap_content"
+                android:layout_height="25dp"
+                android:layout_alignEnd="@+id/iv_picture2"
+                android:layout_alignStart="@+id/iv_picture2"
+                android:layout_below="@+id/iv_picture2"
+                android:background="@null"
+                android:gravity="center"
+                android:hint="第二句话"
+                android:imeOptions="actionDone"
+                android:inputType="text"
+                android:maxLength="5"
+                android:maxLines="1"
+                android:textColor="@color/black"
+                android:textSize="@dimen/textsize_14" />
+
+            <EditText
+                android:id="@+id/et_name3"
+                android:layout_width="wrap_content"
+                android:layout_height="25dp"
+                android:layout_alignEnd="@+id/iv_picture3"
+                android:layout_alignStart="@+id/iv_picture3"
+                android:layout_below="@+id/iv_picture3"
+                android:background="@null"
+                android:gravity="center"
+                android:hint="第三句话"
+                android:imeOptions="actionDone"
+                android:inputType="text"
+                android:maxLength="5"
+                android:maxLines="1"
+                android:textColor="@color/black"
+                android:textSize="@dimen/textsize_14" />
+
+        </RelativeLayout>
+
+        <TextView
+            android:id="@+id/tv_do_create"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_margin="20dp"
+            android:background="@drawable/selector_bg_button_green"
+            android:gravity="center"
+            android:text="生成"
+            android:textColor="@color/white"
+            android:textSize="@dimen/textsize_17" />
+
+        <TextView
+            android:id="@+id/tv_path"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:textColor="@color/black"
+            android:textSize="@dimen/textsize_14"
+            tools:text="保存路径：" />
+
+        <ImageView
+            android:id="@+id/iv_preview"
+            android:layout_width="300dp"
+            android:layout_height="150dp"
+            android:layout_marginTop="10dp"
+            android:background="@color/white"
+            android:scaleType="fitCenter" />
+
+        <TextView
+            android:id="@+id/tv_delete"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_margin="20dp"
+            android:background="@drawable/selector_bg_button_green"
+            android:gravity="center"
+            android:text="删除"
+            android:textColor="@color/white"
+            android:textSize="@dimen/textsize_17" />
+
+    </LinearLayout>
+
+</android.support.design.widget.CoordinatorLayout>
