@@ -32,11 +32,13 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
-            android:background="@color/white">
+            android:background="@color/white"
+            android:paddingEnd="10dp"
+            android:paddingStart="10dp">
 
             <EditText
                 android:id="@+id/et_title"
-                android:layout_width="300dp"
+                android:layout_width="320dp"
                 android:layout_height="25dp"
                 android:layout_centerHorizontal="true"
                 android:background="@null"
@@ -63,6 +65,8 @@
                 android:layout_width="100dp"
                 android:layout_height="100dp"
                 android:layout_below="@+id/et_title"
+                android:layout_marginEnd="10dp"
+                android:layout_marginStart="10dp"
                 android:layout_toEndOf="@+id/iv_picture1"
                 android:background="@drawable/btn_plus"
                 android:scaleType="centerCrop" />
