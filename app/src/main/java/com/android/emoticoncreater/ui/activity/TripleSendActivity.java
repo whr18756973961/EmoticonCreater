@@ -16,7 +16,7 @@ import com.android.emoticoncreater.R;
 import com.android.emoticoncreater.app.BaseActivity;
 import com.android.emoticoncreater.config.Constants;
 import com.android.emoticoncreater.utils.DataCleanManager;
-import com.android.emoticoncreater.utils.ImageUtils;
+import com.android.emoticoncreater.utils.EmotionCreateUtils;
 import com.android.emoticoncreater.utils.SDCardUtils;
 import com.android.emoticoncreater.utils.ThreadPoolUtil;
 import com.android.emoticoncreater.widget.imageloader.ImageLoaderFactory;
@@ -59,55 +59,6 @@ public class TripleSendActivity extends BaseActivity {
     private String mBasePath;
     private String mCachePath;
     private File mCurrentImage;
-
-    private View.OnClickListener mClick = new View.OnClickListener() {
-        @Override
-        public void onClick(View v) {
-            hideKeyboard();
-            switch (v.getId()) {
-                case R.id.iv_picture1:
-                    selectPicture(REQUEST_CODE_PICTURE1);
-                    break;
-                case R.id.iv_picture2:
-                    selectPicture(REQUEST_CODE_PICTURE2);
-                    break;
-                case R.id.iv_picture3:
-                    selectPicture(REQUEST_CODE_PICTURE3);
-                    break;
-                case R.id.tv_do_create:
-                    doCreatePicture();
-                    break;
-                case R.id.iv_preview:
-                    doShare();
-                    break;
-                case R.id.tv_delete:
-                    doDelete();
-                    break;
-            }
-        }
-    };
-
-    private View.OnLongClickListener mLongClick = new View.OnLongClickListener() {
-        @Override
-        public boolean onLongClick(View v) {
-            hideKeyboard();
-            if (!TextUtils.isEmpty(mPath1)) {
-                switch (v.getId()) {
-                    case R.id.iv_picture2:
-                        mPath2 = mPath1;
-                        ImageLoaderFactory.getLoader().loadImage(TripleSendActivity.this, ivPicture2, mPath2);
-                        break;
-                    case R.id.iv_picture3:
-                        mPath3 = mPath1;
-                        ImageLoaderFactory.getLoader().loadImage(TripleSendActivity.this, ivPicture3, mPath3);
-                        break;
-                }
-            } else {
-                Snackbar.make(mRootView, "请先选择图片1", Snackbar.LENGTH_LONG).show();
-            }
-            return true;
-        }
-    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -244,7 +195,7 @@ public class TripleSendActivity extends BaseActivity {
             ThreadPoolUtil.getInstache().cachedExecute(new Runnable() {
                 @Override
                 public void run() {
-                    mCurrentImage = ImageUtils.createExpression(title, mPath1, mPath2, mPath3, name1, name2, name3, mBasePath);
+                    mCurrentImage = EmotionCreateUtils.createExpression(title, mPath1, mPath2, mPath3, name1, name2, name3, mBasePath);
 
                     runOnUiThread(new Runnable() {
                         @Override
@@ -274,6 +225,8 @@ public class TripleSendActivity extends BaseActivity {
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             startActivity(Intent.createChooser(intent, ""));
         } else {
+            tvPath.setText("");
+            ivPreview.setImageResource(0);
             Snackbar.make(mRootView, "文件不存在", Snackbar.LENGTH_LONG).show();
         }
     }
@@ -281,10 +234,58 @@ public class TripleSendActivity extends BaseActivity {
     private void doDelete() {
         if (mCurrentImage != null && mCurrentImage.exists()) {
             mCurrentImage.delete();
-            tvPath.setText("");
-            ivPreview.setImageResource(0);
         }
+        tvPath.setText("");
+        ivPreview.setImageResource(0);
         Snackbar.make(mRootView, "文件已删除", Snackbar.LENGTH_LONG).show();
     }
 
+    private View.OnClickListener mClick = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            hideKeyboard();
+            switch (v.getId()) {
+                case R.id.iv_picture1:
+                    selectPicture(REQUEST_CODE_PICTURE1);
+                    break;
+                case R.id.iv_picture2:
+                    selectPicture(REQUEST_CODE_PICTURE2);
+                    break;
+                case R.id.iv_picture3:
+                    selectPicture(REQUEST_CODE_PICTURE3);
+                    break;
+                case R.id.tv_do_create:
+                    doCreatePicture();
+                    break;
+                case R.id.iv_preview:
+                    doShare();
+                    break;
+                case R.id.tv_delete:
+                    doDelete();
+                    break;
+            }
+        }
+    };
+
+    private View.OnLongClickListener mLongClick = new View.OnLongClickListener() {
+        @Override
+        public boolean onLongClick(View v) {
+            hideKeyboard();
+            if (!TextUtils.isEmpty(mPath1)) {
+                switch (v.getId()) {
+                    case R.id.iv_picture2:
+                        mPath2 = mPath1;
+                        ImageLoaderFactory.getLoader().loadImage(TripleSendActivity.this, ivPicture2, mPath2);
+                        break;
+                    case R.id.iv_picture3:
+                        mPath3 = mPath1;
+                        ImageLoaderFactory.getLoader().loadImage(TripleSendActivity.this, ivPicture3, mPath3);
+                        break;
+                }
+            } else {
+                Snackbar.make(mRootView, "请先选择图片1", Snackbar.LENGTH_LONG).show();
+            }
+            return true;
+        }
+    };
 }

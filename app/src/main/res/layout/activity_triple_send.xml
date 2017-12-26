@@ -92,7 +92,7 @@
                 android:hint="第一句话"
                 android:imeOptions="actionDone"
                 android:inputType="text"
-                android:maxLength="5"
+                android:maxLength="6"
                 android:maxLines="1"
                 android:textColor="@color/black"
                 android:textSize="@dimen/textsize_14" />
@@ -109,7 +109,7 @@
                 android:hint="第二句话"
                 android:imeOptions="actionDone"
                 android:inputType="text"
-                android:maxLength="5"
+                android:maxLength="6"
                 android:maxLines="1"
                 android:textColor="@color/black"
                 android:textSize="@dimen/textsize_14" />
@@ -126,7 +126,7 @@
                 android:hint="第三句话"
                 android:imeOptions="actionDone"
                 android:inputType="text"
-                android:maxLength="5"
+                android:maxLength="6"
                 android:maxLines="1"
                 android:textColor="@color/black"
                 android:textSize="@dimen/textsize_14" />
