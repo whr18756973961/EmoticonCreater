@@ -49,7 +49,7 @@
                 android:maxLength="10"
                 android:maxLines="1"
                 android:textColor="@color/black"
-                android:textSize="@dimen/textsize_14" />
+                android:textSize="14sp" />
 
             <ImageView
                 android:id="@+id/iv_picture1"
@@ -95,7 +95,7 @@
                 android:maxLength="6"
                 android:maxLines="1"
                 android:textColor="@color/black"
-                android:textSize="@dimen/textsize_14" />
+                android:textSize="14sp" />
 
             <EditText
                 android:id="@+id/et_name2"
@@ -112,7 +112,7 @@
                 android:maxLength="6"
                 android:maxLines="1"
                 android:textColor="@color/black"
-                android:textSize="@dimen/textsize_14" />
+                android:textSize="14sp" />
 
             <EditText
                 android:id="@+id/et_name3"
@@ -129,7 +129,7 @@
                 android:maxLength="6"
                 android:maxLines="1"
                 android:textColor="@color/black"
-                android:textSize="@dimen/textsize_14" />
+                android:textSize="14sp" />
 
         </RelativeLayout>
 
@@ -142,14 +142,14 @@
             android:gravity="center"
             android:text="生成"
             android:textColor="@color/white"
-            android:textSize="@dimen/textsize_17" />
+            android:textSize="17sp" />
 
         <TextView
             android:id="@+id/tv_path"
             android:layout_width="300dp"
             android:layout_height="wrap_content"
             android:textColor="@color/black"
-            android:textSize="@dimen/textsize_14"
+            android:textSize="14sp"
             tools:text="保存路径：" />
 
         <ImageView
@@ -169,7 +169,7 @@
             android:gravity="center"
             android:text="删除"
             android:textColor="@color/white"
-            android:textSize="@dimen/textsize_17" />
+            android:textSize="17sp" />
 
     </LinearLayout>
 

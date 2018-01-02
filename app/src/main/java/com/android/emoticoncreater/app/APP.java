@@ -2,9 +2,6 @@ package com.android.emoticoncreater.app;
 
 import android.app.Application;
 
-import com.android.emoticoncreater.R;
-import com.orhanobut.logger.Logger;
-
 /**
  * application
  */
@@ -31,6 +28,5 @@ public class APP extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-        Logger.init(getString(R.string.app_name));
     }
 }

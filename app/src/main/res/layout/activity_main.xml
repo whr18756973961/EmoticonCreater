@@ -37,7 +37,7 @@
             android:gravity="center"
             android:text="表情三连发"
             android:textColor="@color/white"
-            android:textSize="@dimen/textsize_17" />
+            android:textSize="17sp" />
 
     </LinearLayout>
 

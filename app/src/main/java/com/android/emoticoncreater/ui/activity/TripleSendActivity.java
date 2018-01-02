@@ -89,6 +89,10 @@ public class TripleSendActivity extends BaseActivity {
                 if (REQUEST_CODE_PICTURE1 == requestCode) {
                     mPath1 = media.getCompressPath();
                     ImageLoaderFactory.getLoader().loadImage(TripleSendActivity.this, ivPicture1, mPath1);
+                    mPath2 = mPath1;
+                    ImageLoaderFactory.getLoader().loadImage(TripleSendActivity.this, ivPicture2, mPath2);
+                    mPath3 = mPath1;
+                    ImageLoaderFactory.getLoader().loadImage(TripleSendActivity.this, ivPicture3, mPath3);
                 } else if (REQUEST_CODE_PICTURE2 == requestCode) {
                     mPath2 = media.getCompressPath();
                     ImageLoaderFactory.getLoader().loadImage(TripleSendActivity.this, ivPicture2, mPath2);
@@ -139,8 +143,6 @@ public class TripleSendActivity extends BaseActivity {
         ivPreview.setOnClickListener(mClick);
         tvDelete.setOnClickListener(mClick);
 
-        ivPicture2.setOnLongClickListener(mLongClick);
-        ivPicture3.setOnLongClickListener(mLongClick);
     }
 
     private void selectPicture(int requestCode) {
@@ -264,28 +266,6 @@ public class TripleSendActivity extends BaseActivity {
                     doDelete();
                     break;
             }
-        }
-    };
-
-    private View.OnLongClickListener mLongClick = new View.OnLongClickListener() {
-        @Override
-        public boolean onLongClick(View v) {
-            hideKeyboard();
-            if (!TextUtils.isEmpty(mPath1)) {
-                switch (v.getId()) {
-                    case R.id.iv_picture2:
-                        mPath2 = mPath1;
-                        ImageLoaderFactory.getLoader().loadImage(TripleSendActivity.this, ivPicture2, mPath2);
-                        break;
-                    case R.id.iv_picture3:
-                        mPath3 = mPath1;
-                        ImageLoaderFactory.getLoader().loadImage(TripleSendActivity.this, ivPicture3, mPath3);
-                        break;
-                }
-            } else {
-                Snackbar.make(mRootView, "请先选择图片1", Snackbar.LENGTH_LONG).show();
-            }
-            return true;
         }
     };
 }
