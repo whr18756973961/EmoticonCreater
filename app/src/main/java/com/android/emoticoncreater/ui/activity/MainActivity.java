@@ -17,8 +17,11 @@ import android.widget.TextView;
 
 import com.android.emoticoncreater.R;
 import com.android.emoticoncreater.app.BaseActivity;
+import com.android.emoticoncreater.config.Constants;
 import com.android.emoticoncreater.utils.AppManager;
 import com.android.emoticoncreater.utils.FastClick;
+import com.android.emoticoncreater.utils.FileUtils;
+import com.android.emoticoncreater.utils.SDCardUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -118,6 +121,12 @@ public class MainActivity extends BaseActivity {
         }
         permissions = requestList.toArray(new String[requestList.size()]);
         errorTips = errorTipsList.toArray(new String[errorTipsList.size()]);
+
+        final String dcimPath = SDCardUtils.getSDCardDir() + Constants.PATH_DCIM;
+        final String basePath = SDCardUtils.getSDCardDir() + Constants.PATH_BASE;
+
+        FileUtils.createdirectory(dcimPath);
+        FileUtils.createdirectory(basePath);
     }
 
     private void initView() {

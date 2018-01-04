@@ -7,6 +7,8 @@ import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.Snackbar;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -15,8 +17,11 @@ import android.widget.TextView;
 import com.android.emoticoncreater.R;
 import com.android.emoticoncreater.app.BaseActivity;
 import com.android.emoticoncreater.config.Constants;
+import com.android.emoticoncreater.db.LiteOrmHelper;
+import com.android.emoticoncreater.model.ThreeProverbBean;
 import com.android.emoticoncreater.utils.DataCleanManager;
 import com.android.emoticoncreater.utils.EmotionCreateUtils;
+import com.android.emoticoncreater.utils.FileUtils;
 import com.android.emoticoncreater.utils.SDCardUtils;
 import com.android.emoticoncreater.utils.ThreadPoolUtil;
 import com.android.emoticoncreater.widget.imageloader.ImageLoaderFactory;
@@ -37,6 +42,7 @@ public class TripleSendActivity extends BaseActivity {
     private static final int REQUEST_CODE_PICTURE1 = 1001;
     private static final int REQUEST_CODE_PICTURE2 = 1002;
     private static final int REQUEST_CODE_PICTURE3 = 1003;
+    private static final int REQUEST_CODE_TO_PROVERB = 1004;
 
     private CoordinatorLayout mRootView;
     private Toolbar mToolbar;
@@ -48,17 +54,18 @@ public class TripleSendActivity extends BaseActivity {
     private EditText etName2;
     private EditText etName3;
     private TextView tvDoCreate;
-    private TextView tvPath;
     private ImageView ivPreview;
-    private TextView tvDelete;
+    private TextView tvDoSave;
+    private TextView tvDoSend;
 
     private String mPath1;
     private String mPath2;
     private String mPath3;
-
-    private String mBasePath;
-    private String mCachePath;
+    private String mSavePath;
+    private String mTempPath;
+    private String mUsedPath;
     private File mCurrentImage;
+    private LiteOrmHelper mDBHelper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,9 +80,12 @@ public class TripleSendActivity extends BaseActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        final File cacheDir = new File(mCachePath);
+        final File cacheDir = new File(mTempPath);
         if (cacheDir.exists()) {
             DataCleanManager.deleteAllFiles(cacheDir);
+        }
+        if (mDBHelper != null) {
+            mDBHelper.closeDB();
         }
     }
 
@@ -83,39 +93,68 @@ public class TripleSendActivity extends BaseActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == RESULT_OK) {
-            final List<LocalMedia> selectList = PictureSelector.obtainMultipleResult(data);
-            if (selectList != null && selectList.size() > 0) {
-                final LocalMedia media = selectList.get(0);
-                if (REQUEST_CODE_PICTURE1 == requestCode) {
-                    mPath1 = media.getCompressPath();
-                    ImageLoaderFactory.getLoader().loadImage(TripleSendActivity.this, ivPicture1, mPath1);
-                    mPath2 = mPath1;
-                    ImageLoaderFactory.getLoader().loadImage(TripleSendActivity.this, ivPicture2, mPath2);
-                    mPath3 = mPath1;
-                    ImageLoaderFactory.getLoader().loadImage(TripleSendActivity.this, ivPicture3, mPath3);
-                } else if (REQUEST_CODE_PICTURE2 == requestCode) {
-                    mPath2 = media.getCompressPath();
-                    ImageLoaderFactory.getLoader().loadImage(TripleSendActivity.this, ivPicture2, mPath2);
-                } else {
-                    mPath3 = media.getCompressPath();
-                    ImageLoaderFactory.getLoader().loadImage(TripleSendActivity.this, ivPicture3, mPath3);
+            if (REQUEST_CODE_TO_PROVERB == requestCode) {
+                final ThreeProverbBean proverb = data.getParcelableExtra(Constants.KEY_RETURN_DATA);
+                if (proverb != null) {
+                    etTitle.setText(proverb.getTitle());
+                    etName1.setText(proverb.getFirstProverb());
+                    etName2.setText(proverb.getSecondProverb());
+                    etName3.setText(proverb.getThirdProverb());
+                }
+            } else {
+                final List<LocalMedia> selectList = PictureSelector.obtainMultipleResult(data);
+                if (selectList != null && selectList.size() > 0) {
+                    final LocalMedia media = selectList.get(0);
+                    final String path = media.getPath();
+                    final String compressPath = media.getCompressPath();
+                    if (REQUEST_CODE_PICTURE1 == requestCode) {
+                        mPath1 = path.contains(mUsedPath) ? path : compressPath;
+                        ImageLoaderFactory.getLoader().loadImage(TripleSendActivity.this, ivPicture1, mPath1);
+                        mPath2 = mPath1;
+                        ImageLoaderFactory.getLoader().loadImage(TripleSendActivity.this, ivPicture2, mPath2);
+                        mPath3 = mPath1;
+                        ImageLoaderFactory.getLoader().loadImage(TripleSendActivity.this, ivPicture3, mPath3);
+                    } else if (REQUEST_CODE_PICTURE2 == requestCode) {
+                        mPath2 = path.contains(mUsedPath) ? path : compressPath;
+                        ImageLoaderFactory.getLoader().loadImage(TripleSendActivity.this, ivPicture2, mPath2);
+                    } else {
+                        mPath3 = path.contains(mUsedPath) ? path : compressPath;
+                        ImageLoaderFactory.getLoader().loadImage(TripleSendActivity.this, ivPicture3, mPath3);
+                    }
                 }
             }
         }
     }
 
-    private void initData() {
-        mBasePath = SDCardUtils.getSDCardDir() + Constants.PATH_BASE;
-        mCachePath = SDCardUtils.getExternalCacheDir(this);
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_tools, menu);
+        return true;
+    }
 
-        final File baseDir = new File(mBasePath);
-        final File tempDir = new File(mCachePath);
-        if (!baseDir.exists()) {
-            baseDir.mkdir();
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        hideKeyboard();
+        int id = item.getItemId();
+        if (id == R.id.action_proverb) {
+            Intent intent = new Intent();
+            intent.setClass(TripleSendActivity.this, ThreeProverbListActivity.class);
+            startActivityForResult(intent, REQUEST_CODE_TO_PROVERB);
+            return true;
         }
-        if (!tempDir.exists()) {
-            tempDir.mkdir();
-        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    private void initData() {
+        mSavePath = SDCardUtils.getSDCardDir() + Constants.PATH_TRIPLE_SEND;
+        mTempPath = SDCardUtils.getExternalCacheDir(this);
+        mUsedPath = SDCardUtils.getSDCardDir() + Constants.PATH_USED_PICTURE;
+
+        FileUtils.createdirectory(mSavePath);
+        FileUtils.createdirectory(mTempPath);
+        FileUtils.createdirectory(mUsedPath);
+
+        mDBHelper = new LiteOrmHelper(this);
     }
 
     private void initView() {
@@ -129,9 +168,9 @@ public class TripleSendActivity extends BaseActivity {
         etName2 = (EditText) findViewById(R.id.et_name2);
         etName3 = (EditText) findViewById(R.id.et_name3);
         tvDoCreate = (TextView) findViewById(R.id.tv_do_create);
-        tvPath = (TextView) findViewById(R.id.tv_path);
         ivPreview = (ImageView) findViewById(R.id.iv_preview);
-        tvDelete = (TextView) findViewById(R.id.tv_delete);
+        tvDoSave = (TextView) findViewById(R.id.tv_do_save);
+        tvDoSend = (TextView) findViewById(R.id.tv_do_send);
 
         mToolbar.setTitle("表情三连发");
         setSupportActionBar(mToolbar);
@@ -140,8 +179,8 @@ public class TripleSendActivity extends BaseActivity {
         ivPicture2.setOnClickListener(mClick);
         ivPicture3.setOnClickListener(mClick);
         tvDoCreate.setOnClickListener(mClick);
-        ivPreview.setOnClickListener(mClick);
-        tvDelete.setOnClickListener(mClick);
+        tvDoSave.setOnClickListener(mClick);
+        tvDoSend.setOnClickListener(mClick);
 
     }
 
@@ -160,7 +199,8 @@ public class TripleSendActivity extends BaseActivity {
                 .withAspectRatio(1, 1)
                 .hideBottomControls(false)
                 .isGif(false)
-                .compressSavePath(mCachePath)
+                .compressSavePath(mTempPath)
+                .minimumCompressSize(100)
                 .freeStyleCropEnabled(false)
                 .circleDimmedLayer(false)
                 .showCropFrame(true)
@@ -197,7 +237,11 @@ public class TripleSendActivity extends BaseActivity {
             ThreadPoolUtil.getInstache().cachedExecute(new Runnable() {
                 @Override
                 public void run() {
-                    mCurrentImage = EmotionCreateUtils.createExpression(title, mPath1, mPath2, mPath3, name1, name2, name3, mBasePath);
+                    copyUsedPicture();
+
+                    mCurrentImage = EmotionCreateUtils.createExpression(title, mPath1, mPath2, mPath3, name1, name2, name3, mSavePath);
+
+                    doStatistics(title, name1, name2, name3);
 
                     runOnUiThread(new Runnable() {
                         @Override
@@ -205,7 +249,10 @@ public class TripleSendActivity extends BaseActivity {
                             if (mCurrentImage.exists()) {
                                 final String filePath = mCurrentImage.getAbsolutePath();
                                 ImageLoaderFactory.getLoader().loadImage(TripleSendActivity.this, ivPreview, filePath);
-                                tvPath.setText("保存路径：" + filePath);
+
+                                refreshAlbum(mCurrentImage);
+
+                                Snackbar.make(mRootView, "保存路径：" + filePath, Snackbar.LENGTH_LONG).show();
                             } else {
                                 Snackbar.make(mRootView, "生成失败", Snackbar.LENGTH_LONG).show();
                             }
@@ -217,7 +264,68 @@ public class TripleSendActivity extends BaseActivity {
         }
     }
 
-    private void doShare() {
+    private void copyUsedPicture() {
+        if (!TextUtils.isEmpty(mPath1) && !mPath1.contains(mUsedPath)) {
+            refreshAlbum(FileUtils.copyFile(mPath1, mUsedPath));
+        }
+        if (!TextUtils.isEmpty(mPath2) && !mPath2.equals(mPath1) && !mPath2.contains(mUsedPath)) {
+            refreshAlbum(FileUtils.copyFile(mPath2, mUsedPath));
+        }
+        if (!TextUtils.isEmpty(mPath3) && !mPath3.equals(mPath1) && !mPath3.contains(mUsedPath)) {
+            refreshAlbum(FileUtils.copyFile(mPath3, mUsedPath));
+        }
+    }
+
+    private void refreshAlbum(File file) {
+        if (file != null && file.exists()) {
+            final Uri uri = Uri.fromFile(file);
+            sendBroadcast(new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE, uri));
+        }
+    }
+
+    private void doStatistics(String title, String name1, String name2, String name3) {
+        final ThreeProverbBean proverb = mDBHelper.queryFirst(ThreeProverbBean.class,
+                "title == ? and firstProverb == ? and secondProverb == ? and thirdProverb == ?",
+                title, name1, name2, name3);
+        if (proverb != null) {
+            proverb.setUseTimes(proverb.getUseTimes() + 1);
+            mDBHelper.update(proverb);
+        }
+    }
+
+    private void doSaveProverb() {
+        final String title = etTitle.getText().toString();
+        final String name1 = etName1.getText().toString();
+        final String name2 = etName2.getText().toString();
+        final String name3 = etName3.getText().toString();
+        if (TextUtils.isEmpty(title)) {
+            Snackbar.make(mRootView, "请先输入标题", Snackbar.LENGTH_LONG).show();
+        } else if (TextUtils.isEmpty(name1)) {
+            Snackbar.make(mRootView, "请输入图片1文字内容", Snackbar.LENGTH_LONG).show();
+        } else if (TextUtils.isEmpty(name2)) {
+            Snackbar.make(mRootView, "请输入图片2文字内容", Snackbar.LENGTH_LONG).show();
+        } else if (TextUtils.isEmpty(name3)) {
+            Snackbar.make(mRootView, "请输入图片3文字内容", Snackbar.LENGTH_LONG).show();
+        } else {
+            ThreeProverbBean proverb = mDBHelper.queryFirst(ThreeProverbBean.class,
+                    "title == ? and firstProverb == ? and secondProverb == ? and thirdProverb == ?",
+                    title, name1, name2, name3);
+            if (proverb == null) {
+                proverb = new ThreeProverbBean();
+                proverb.setTitle(title);
+                proverb.setFirstProverb(name1);
+                proverb.setSecondProverb(name2);
+                proverb.setThirdProverb(name3);
+                proverb.setUseTimes(1);
+                mDBHelper.save(proverb);
+                Snackbar.make(mRootView, "保存成功", Snackbar.LENGTH_LONG).show();
+            } else {
+                Snackbar.make(mRootView, "这套语录已在“怼人语录”里", Snackbar.LENGTH_LONG).show();
+            }
+        }
+    }
+
+    private void doSend() {
         if (mCurrentImage != null && mCurrentImage.exists() && mCurrentImage.isFile()) {
             final Uri uri = Uri.fromFile(mCurrentImage);
 
@@ -227,19 +335,9 @@ public class TripleSendActivity extends BaseActivity {
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             startActivity(Intent.createChooser(intent, ""));
         } else {
-            tvPath.setText("");
             ivPreview.setImageResource(0);
-            Snackbar.make(mRootView, "文件不存在", Snackbar.LENGTH_LONG).show();
+            Snackbar.make(mRootView, "图片不存在", Snackbar.LENGTH_LONG).show();
         }
-    }
-
-    private void doDelete() {
-        if (mCurrentImage != null && mCurrentImage.exists()) {
-            mCurrentImage.delete();
-        }
-        tvPath.setText("");
-        ivPreview.setImageResource(0);
-        Snackbar.make(mRootView, "文件已删除", Snackbar.LENGTH_LONG).show();
     }
 
     private View.OnClickListener mClick = new View.OnClickListener() {
@@ -259,11 +357,11 @@ public class TripleSendActivity extends BaseActivity {
                 case R.id.tv_do_create:
                     doCreatePicture();
                     break;
-                case R.id.iv_preview:
-                    doShare();
+                case R.id.tv_do_save:
+                    doSaveProverb();
                     break;
-                case R.id.tv_delete:
-                    doDelete();
+                case R.id.tv_do_send:
+                    doSend();
                     break;
             }
         }

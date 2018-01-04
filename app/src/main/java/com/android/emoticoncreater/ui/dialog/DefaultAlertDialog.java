@@ -17,8 +17,8 @@ public class DefaultAlertDialog {
     public DefaultAlertDialog(Context context) {
         if (alertDialog == null) {
             alertDialog = new AlertDialog.Builder(context).create();
-            alertDialog.setCanceledOnTouchOutside(false);
-            alertDialog.setCancelable(false);
+            alertDialog.setCanceledOnTouchOutside(true);
+            alertDialog.setCancelable(true);
         }
     }
 

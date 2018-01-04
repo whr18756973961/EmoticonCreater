@@ -34,6 +34,9 @@
         <activity
             android:name=".ui.activity.TripleSendActivity"
             android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.activity.ThreeProverbListActivity"
+            android:screenOrientation="portrait" />
 
     </application>
 
