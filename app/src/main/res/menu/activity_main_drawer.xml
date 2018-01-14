@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group
+        android:id="@+id/my"
+        android:checkableBehavior="single">
+
+        <item
+            android:id="@+id/nav_my_picture"
+            android:checkable="true"
+            android:icon="@drawable/ic_my_picture"
+            android:title="@string/my_picture" />
+
+    </group>
+
+    <group
+        android:id="@+id/tools"
+        android:checkableBehavior="none">
+
+        <item
+            android:id="@+id/nav_three_send"
+            android:icon="@drawable/ic_three_send"
+            android:title="@string/emoji_three_rounds_of_send" />
+
+    </group>
+
+    <group
+        android:id="@+id/setting"
+        android:checkableBehavior="none">
+
+        <item
+            android:id="@+id/nav_settings"
+            android:icon="@drawable/ic_settings"
+            android:title="@string/settings" />
+
+        <item
+            android:id="@+id/nav_about"
+            android:icon="@drawable/ic_about"
+            android:title="@string/about" />
+
+    </group>
+
+</menu>

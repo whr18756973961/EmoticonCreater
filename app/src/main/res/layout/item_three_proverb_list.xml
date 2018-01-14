@@ -19,7 +19,7 @@
             android:id="@+id/tv_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="@color/black_90"
+            android:textColor="@color/black_light"
             android:textSize="16sp"
             tools:text="标题" />
 
@@ -33,7 +33,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:textColor="@color/black_90"
+                android:textColor="@color/black_light"
                 android:textSize="14sp"
                 tools:text="标题" />
 
@@ -44,7 +44,7 @@
                 android:layout_marginEnd="5dp"
                 android:layout_marginStart="5dp"
                 android:layout_weight="1"
-                android:textColor="@color/black_90"
+                android:textColor="@color/black_light"
                 android:textSize="14sp"
                 tools:text="标题" />
 
@@ -53,7 +53,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:textColor="@color/black_90"
+                android:textColor="@color/black_light"
                 android:textSize="14sp"
                 tools:text="标题" />
 
@@ -62,7 +62,7 @@
         <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:background="@color/color_F1F1F1" />
+            android:background="@color/material_brown_50" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -74,7 +74,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:textColor="@color/black_90"
+                android:textColor="@color/black_light"
                 android:textSize="14sp"
                 tools:text="使用次数：100" />
 
@@ -85,7 +85,7 @@
                 android:gravity="center"
                 android:paddingEnd="10dp"
                 android:paddingStart="10dp"
-                android:textColor="@color/black_90"
+                android:textColor="@color/black_light"
                 android:textSize="14sp"
                 android:text="删除" />
 

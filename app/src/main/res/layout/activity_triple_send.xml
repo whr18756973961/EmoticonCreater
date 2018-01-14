@@ -47,7 +47,7 @@
                 android:inputType="text"
                 android:maxLength="10"
                 android:maxLines="1"
-                android:textColor="@color/black"
+                android:textColor="@color/black_light"
                 android:textSize="14sp" />
 
             <ImageView
@@ -93,7 +93,7 @@
                 android:inputType="text"
                 android:maxLength="6"
                 android:maxLines="1"
-                android:textColor="@color/black"
+                android:textColor="@color/black_light"
                 android:textSize="14sp" />
 
             <EditText
@@ -110,7 +110,7 @@
                 android:inputType="text"
                 android:maxLength="6"
                 android:maxLines="1"
-                android:textColor="@color/black"
+                android:textColor="@color/black_light"
                 android:textSize="14sp" />
 
             <EditText
@@ -127,7 +127,7 @@
                 android:inputType="text"
                 android:maxLength="6"
                 android:maxLines="1"
-                android:textColor="@color/black"
+                android:textColor="@color/black_light"
                 android:textSize="14sp" />
 
         </RelativeLayout>

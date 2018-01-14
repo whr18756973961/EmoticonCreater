@@ -15,4 +15,11 @@ public class Constants {
 
     public static final String KEY_RETURN_DATA = "key_return_data";//ActivityResult
 
+    public final static String DARK = "Dark";
+    public final static String LIGHT_TEAL = "Light teal";
+
+    //SharedPreferences
+    public final static String THEME = "appTheme";
+    public final static String LANGUAGE = "language";
+
 }
