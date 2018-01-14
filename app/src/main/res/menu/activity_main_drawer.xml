@@ -8,7 +8,7 @@
         <item
             android:id="@+id/nav_my_picture"
             android:checkable="true"
-            android:icon="@drawable/ic_my_picture"
+            android:icon="@drawable/ic_photo_library"
             android:title="@string/my_picture" />
 
     </group>
@@ -19,7 +19,7 @@
 
         <item
             android:id="@+id/nav_three_send"
-            android:icon="@drawable/ic_three_send"
+            android:icon="@drawable/ic_filter_3"
             android:title="@string/emoji_three_rounds_of_send" />
 
     </group>
@@ -35,7 +35,7 @@
 
         <item
             android:id="@+id/nav_about"
-            android:icon="@drawable/ic_about"
+            android:icon="@drawable/ic_info_outline"
             android:title="@string/about" />
 
     </group>

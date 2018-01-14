@@ -8,5 +8,7 @@
     <string name="emoji_three_rounds_of_send">表情三连发</string>
     <string name="settings">设置</string>
     <string name="about">关于</string>
+    <string name="choose_theme">选择主题</string>
+    <string name="language">语言</string>
 
 </resources>

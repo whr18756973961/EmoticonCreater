@@ -1,5 +1,6 @@
 package com.android.emoticoncreater.app;
 
+import android.os.Bundle;
 import android.support.annotation.IdRes;
 import android.support.annotation.MenuRes;
 import android.support.annotation.NonNull;
@@ -12,7 +13,7 @@ import android.view.MenuItem;
 import com.android.emoticoncreater.R;
 
 /**
- * Metrial Design BaseDrawerActivity
+ * Material Design BaseDrawerActivity
  */
 
 public abstract class MDBaseDrawerActivity extends MDBaseActivity {
@@ -28,8 +29,8 @@ public abstract class MDBaseDrawerActivity extends MDBaseActivity {
     }
 
     @Override
-    protected void initView() {
-        super.initView();
+    protected void initView(Bundle savedInstanceState) {
+        super.initView(savedInstanceState);
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         navViewStart = (NavigationView) findViewById(R.id.nav_view_start);
 

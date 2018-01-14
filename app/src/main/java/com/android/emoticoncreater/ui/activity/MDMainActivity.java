@@ -1,10 +1,12 @@
 package com.android.emoticoncreater.ui.activity;
 
+import android.os.Bundle;
+
 import com.android.emoticoncreater.R;
 import com.android.emoticoncreater.app.MDBaseDrawerActivity;
 
 /**
- * Metrial Design MainActivity
+ * Material Design MainActivity
  */
 
 public class MDMainActivity extends MDBaseDrawerActivity {
@@ -20,10 +22,11 @@ public class MDMainActivity extends MDBaseDrawerActivity {
     }
 
     @Override
-    protected void initView() {
+    protected void initView(Bundle savedInstanceState) {
         setStartDrawerEnable(true);
-        super.initView();
+        super.initView(savedInstanceState);
         initMenu(R.menu.activity_main_drawer);
+        setToolbarTitle(R.string.my_picture);
     }
 
     @Override

@@ -5,6 +5,9 @@ import android.os.Bundle;
 import android.os.IBinder;
 import android.support.annotation.LayoutRes;
 import android.support.annotation.Nullable;
+import android.support.annotation.StringRes;
+import android.support.design.widget.CoordinatorLayout;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
@@ -14,11 +17,12 @@ import com.android.emoticoncreater.R;
 import com.android.emoticoncreater.ui.dialog.DefaultProgressDialog;
 
 /**
- * Metrial Design BaseActivity
+ * Material Design BaseActivity
  */
 
 public abstract class MDBaseActivity extends AppCompatActivity {
 
+    protected CoordinatorLayout mRootView;
     protected Toolbar mToolbar;
 
     private InputMethodManager manager;
@@ -28,12 +32,11 @@ public abstract class MDBaseActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
 
 
-
         super.onCreate(savedInstanceState);
         setContentView(getContentView());
 
         initData();
-        initView();
+        initView(savedInstanceState);
 
     }
 
@@ -48,16 +51,17 @@ public abstract class MDBaseActivity extends AppCompatActivity {
         manager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
     }
 
-    protected void initView() {
+    protected void initView(Bundle savedInstanceState) {
+        mRootView = (CoordinatorLayout) findViewById(R.id.rootview);
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
         if (mToolbar != null) {
             setSupportActionBar(mToolbar);
         }
     }
 
-    protected void setToolbarTitle(String title) {
+    protected void setToolbarTitle(@StringRes int stringId) {
         if (getSupportActionBar() != null) {
-            getSupportActionBar().setTitle(title);
+            getSupportActionBar().setTitle(getString(stringId));
         }
     }
 
@@ -71,17 +75,31 @@ public abstract class MDBaseActivity extends AppCompatActivity {
         }
     }
 
-    protected void showProgress(String message) {
+    protected void showProgress(@StringRes int stringId) {
         if (mProgress == null) {
             mProgress = new DefaultProgressDialog(this);
         }
-        mProgress.setMessage(message);
+        mProgress.setMessage(getString(stringId));
         mProgress.showDialog();
     }
 
     protected void hideProgress() {
         if (mProgress != null) {
             mProgress.dismissDialog();
+        }
+    }
+
+    protected void showSnackbar(@StringRes int contentId) {
+        if (mRootView != null) {
+            Snackbar.make(mRootView, contentId, Snackbar.LENGTH_LONG).show();
+        }
+    }
+
+    protected void showSnackbar(@StringRes int btnTextId, @StringRes int contentId, View.OnClickListener click) {
+        if (mRootView != null) {
+            Snackbar.make(mRootView, contentId, Snackbar.LENGTH_LONG)
+                    .setAction(btnTextId, click)
+                    .show();
         }
     }
 
