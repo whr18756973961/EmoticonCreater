@@ -1,6 +1,7 @@
 package com.android.emoticoncreater.app;
 
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.IdRes;
 import android.support.annotation.MenuRes;
 import android.support.annotation.NonNull;
@@ -95,15 +96,16 @@ public abstract class MDBaseDrawerActivity extends MDBaseActivity {
         this.mStartDrawerEnable = startDrawerEnable;
     }
 
-    protected boolean navigationItemSelected(@IdRes int itemId) {
-        return false;
+    protected void navigationItemSelected(@IdRes int itemId) {
     }
 
     private final NavigationView.OnNavigationItemSelectedListener mNavigationItemSelected = new NavigationView.OnNavigationItemSelectedListener() {
         @Override
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
             closeDrawer();
-            return navigationItemSelected(item.getItemId());
+            new Handler().postDelayed(() -> navigationItemSelected(item.getItemId()), 250);
+
+            return false;
         }
     };
 }

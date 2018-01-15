@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <array name="theme_array">
+        <item >Light teal</item>
+        <item >Dark</item>
+    </array>
+
+    <array name="language_array">
+        <item >English</item>
+        <item >简体中文</item>
+    </array>
+
+    <array name="language_id_array">
+        <item >en</item>
+        <item >zh-rCN</item>
+    </array>
+
+</resources>

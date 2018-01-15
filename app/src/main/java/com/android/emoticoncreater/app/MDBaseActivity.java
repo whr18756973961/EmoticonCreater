@@ -10,11 +10,13 @@ import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 
 import com.android.emoticoncreater.R;
 import com.android.emoticoncreater.ui.dialog.DefaultProgressDialog;
+import com.android.emoticoncreater.utils.ThemeHelper;
 
 /**
  * Material Design BaseActivity
@@ -31,7 +33,7 @@ public abstract class MDBaseActivity extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
 
-
+        ThemeHelper.apply(this);
         super.onCreate(savedInstanceState);
         setContentView(getContentView());
 
@@ -45,6 +47,15 @@ public abstract class MDBaseActivity extends AppCompatActivity {
         super.onDestroy();
         hideKeyboard();
         hideProgress();
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if(item.getItemId() == android.R.id.home){
+            finish();
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     protected void initData() {
@@ -65,13 +76,9 @@ public abstract class MDBaseActivity extends AppCompatActivity {
         }
     }
 
-    protected void hideKeyboard() {
-        final View currentFocus = getCurrentFocus();
-        if (currentFocus != null) {
-            final IBinder windowToken = currentFocus.getWindowToken();
-            if (windowToken != null && manager != null) {
-                manager.hideSoftInputFromWindow(windowToken, InputMethodManager.HIDE_NOT_ALWAYS);
-            }
+    protected void setToolbarBackEnable() {
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
     }
 
@@ -102,6 +109,17 @@ public abstract class MDBaseActivity extends AppCompatActivity {
                     .show();
         }
     }
+
+    protected void hideKeyboard() {
+        final View currentFocus = getCurrentFocus();
+        if (currentFocus != null) {
+            final IBinder windowToken = currentFocus.getWindowToken();
+            if (windowToken != null && manager != null) {
+                manager.hideSoftInputFromWindow(windowToken, InputMethodManager.HIDE_NOT_ALWAYS);
+            }
+        }
+    }
+
 
     @LayoutRes
     abstract protected int getContentView();

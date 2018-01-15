@@ -25,6 +25,7 @@
 
         <activity
             android:name=".ui.activity.MDMainActivity"
+            android:launchMode="singleTask"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -43,6 +44,10 @@
         <activity
             android:name=".ui.activity.ThreeProverbListActivity"
             android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".ui.activity.SettingsActivity"
+            android:screenOrientation="portrait"/>
 
     </application>
 

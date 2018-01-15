@@ -1,5 +1,6 @@
 package com.android.emoticoncreater.ui.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import com.android.emoticoncreater.R;
@@ -10,6 +11,8 @@ import com.android.emoticoncreater.app.MDBaseDrawerActivity;
  */
 
 public class MDMainActivity extends MDBaseDrawerActivity {
+
+    private static final int REQUEST_CODE_SETTINGS = 100;
 
     @Override
     protected int getContentView() {
@@ -30,7 +33,15 @@ public class MDMainActivity extends MDBaseDrawerActivity {
     }
 
     @Override
-    protected boolean navigationItemSelected(int itemId) {
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == REQUEST_CODE_SETTINGS && resultCode == RESULT_OK) {
+            recreate();
+        }
+    }
+
+    @Override
+    protected void navigationItemSelected(int itemId) {
         switch (itemId) {
             case R.id.nav_my_picture:
 
@@ -38,9 +49,14 @@ public class MDMainActivity extends MDBaseDrawerActivity {
             case R.id.nav_three_send:
 
                 break;
+            case R.id.nav_settings:
+                SettingsActivity.show(MDMainActivity.this, REQUEST_CODE_SETTINGS);
+                break;
+            case R.id.nav_about:
+
+                break;
             default:
                 break;
         }
-        return true;
     }
 }

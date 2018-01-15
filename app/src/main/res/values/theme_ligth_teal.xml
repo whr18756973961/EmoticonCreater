@@ -39,6 +39,12 @@
         <item name="popup_menu_theme">@style/PopupMenuLightTeal</item>
     </style>
 
+    <style name="ThemeLightTeal.Teal" parent="ThemeLightTeal" >
+        <item name="colorAccent">@color/material_teal_accent_700</item>
+        <item name="alertDialogTheme">@style/DialogThemeLightTeal.Teal</item>
+        <item name="android:alertDialogTheme">@style/DialogThemeLightTeal.Teal</item>
+    </style>
+
     <style name="DialogThemeLightTeal" parent="Theme.AppCompat.Light.Dialog.Alert">
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
@@ -47,6 +53,10 @@
         <item name="colorPrimaryDark">@color/light_teal_color_primary_dark</item>
         <item name="colorAccent">@color/light_teal_color_accent</item>
         <item name="android:windowBackground">@color/light_teal_window_background</item>
+    </style>
+
+    <style name="DialogThemeLightTeal.Teal" parent="DialogThemeLightTeal" >
+        <item name="colorAccent">@color/material_teal_accent_700</item>
     </style>
 
     <style name="AppbarThemeLightTeal" parent="ThemeOverlay.AppCompat.Dark.ActionBar">
