@@ -46,7 +46,7 @@ public class PrefUtils {
     }
 
     public static String getTheme(){
-        return getDefaultSp().getString(Constants.THEME, Constants.LIGHT_TEAL);
+        return getDefaultSp().getString(Constants.THEME, Constants.TEAL);
     }
 
     public static String getLanguage(){

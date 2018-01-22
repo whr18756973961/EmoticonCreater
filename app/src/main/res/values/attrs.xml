@@ -4,7 +4,6 @@
 -->
 <resources>
 
-    <attr name="color_primary_blur" format="color|reference"/>
     <attr name="icon_color" format="color|reference"/>
     <attr name="card_background" format="color|reference"/>
     <attr name="title_color" format="color|reference"/>

@@ -93,6 +93,7 @@ public class SettingsActivity extends MDBaseActivity {
         int cy = mRootLayout.getHeight() / 2;
         float finalRadius = (float) Math.hypot(cx, cy);
         Animator anim = ViewAnimationUtils.createCircularReveal(mRootLayout, cx, cy, 0f, finalRadius);
+        anim.setDuration(500);
         anim.addListener(new AnimatorListenerAdapter() {
             @Override
             public void onAnimationEnd(Animator animation) {

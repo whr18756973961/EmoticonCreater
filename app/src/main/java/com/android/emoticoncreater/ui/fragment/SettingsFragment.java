@@ -52,13 +52,13 @@ public class SettingsFragment extends PreferenceFragmentCompat {
     }
 
     private void showThemeChooser() {
-        final List<String> valueList = Arrays.asList(getResources().getStringArray(R.array.theme_array));
+        final List<String> valueList = Arrays.asList(getResources().getStringArray(R.array.theme_list));
         String theme = PrefUtils.getTheme();
         int selectIndex = valueList.indexOf(theme);
         new AlertDialog.Builder(getContext())
                 .setCancelable(true)
                 .setTitle(R.string.choose_theme)
-                .setSingleChoiceItems(R.array.theme_array, selectIndex, (dialog1, which) -> {
+                .setSingleChoiceItems(R.array.theme_list, selectIndex, (dialog1, which) -> {
                     dialog1.dismiss();
                     PrefUtils.set(Constants.THEME, valueList.get(which));
                     recreateMain();

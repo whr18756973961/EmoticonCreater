@@ -47,7 +47,10 @@
 
         <activity
             android:name=".ui.activity.SettingsActivity"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.activity.ThemeListActivity"
+            android:screenOrientation="portrait" />
 
     </application>
 

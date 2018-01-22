@@ -35,7 +35,10 @@ public abstract class MDBaseActivity extends AppCompatActivity {
 
         ThemeHelper.apply(this);
         super.onCreate(savedInstanceState);
-        setContentView(getContentView());
+
+        if (getContentView() != 0) {
+            setContentView(getContentView());
+        }
 
         initData();
         initView(savedInstanceState);

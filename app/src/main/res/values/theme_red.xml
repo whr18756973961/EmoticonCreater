@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+ ~ Created by ThirtyDegreesRay on 2017/12/08 15:30:00.
+ ~ Copyright (C) 2017 ThirtyDegreesRay.
+-->
+<resources xmlns:tools="http://schemas.android.com/tools">
+
+    <color name="red_color_primary">@color/material_red_500</color>
+    <color name="red_color_primary_dark">@color/material_red_700</color>
+    <color name="red_color_accent">@color/material_red_accent_700</color>
+    <color name="red_window_background">#F4F4F4</color>
+    <color name="red_icon_color">@color/material_light_black</color>
+    <color name="red_card_background">@color/material_white</color>
+    <color name="red_title_color">@color/material_light_white</color>
+    <color name="red_subtitle_color">@color/material_grey_350</color>
+    <color name="red_selected_color">@color/material_grey_350</color>
+    <color name="red_text_color_primary">#212121</color>
+    <color name="red_text_color_secondary">#757575</color>
+
+    <style name="ThemeRed" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="colorPrimary">@color/red_color_primary</item>
+        <item name="colorPrimaryDark">@color/red_color_primary_dark</item>
+        <item name="colorAccent">@color/red_color_accent</item>
+        <item name="android:windowBackground">@color/red_window_background</item>
+        <item name="preferenceTheme">@style/PreferenceThemeOverlay.v14.Material</item>
+        <item name="android:textColorPrimary">@color/red_text_color_primary</item>
+        <item name="android:textColorSecondary">@color/red_text_color_secondary</item>
+        <item name="android:textColorTertiary">@color/material_grey_700</item>
+        <item name="icon_color">@color/red_icon_color</item>
+        <item name="card_background">@color/red_card_background</item>
+        <item name="title_color">@color/red_title_color</item>
+        <item name="subtitle_color">@color/red_subtitle_color</item>
+        <item name="selected_color">@color/red_selected_color</item>
+        <item name="popup_theme">@style/PopupThemeRed</item>
+        <item name="appbar_theme">@style/AppbarThemeRed</item>
+        <item name="android:contextPopupMenuStyle" tools:targetApi="n">@style/ContextPopupThemeRed</item>
+        <item name="popup_menu_theme">@style/PopupMenuRed</item>
+        <item name="alertDialogTheme">@style/DialogThemeRed</item>
+        <item name="android:alertDialogTheme">@style/DialogThemeRed</item>
+    </style>
+
+    <style name="DialogThemeRed" parent="Theme.AppCompat.Light.Dialog.Alert">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+        <item name="icon_color">@color/red_icon_color</item>
+        <item name="colorPrimary">@color/red_color_primary</item>
+        <item name="colorPrimaryDark">@color/red_color_primary_dark</item>
+        <item name="colorAccent">@color/red_color_accent</item>
+        <item name="android:windowBackground">@color/red_window_background</item>
+    </style>
+
+    <style name="AppbarThemeRed" parent="ThemeOverlay.AppCompat.Dark.ActionBar">
+
+    </style>
+
+    <style name="PopupMenuRed" parent="Widget.AppCompat.Light.PopupMenu">
+        <item name="android:popupBackground">@color/red_window_background</item>
+    </style>
+
+    <style name="PopupThemeRed" parent="ThemeOverlay.AppCompat.Light">
+        <item name="android:colorBackground">@color/red_window_background</item>
+    </style>
+
+    <style name="ContextPopupThemeRed" parent="PopupThemeRed">
+        <item name="android:popupBackground">@color/red_window_background</item>
+        <!--
+         ~  Context menu of a RecyclerView is displayed in the wrong location when setting
+         ~  a contextPopupMenuStyle on Android N, set bellow can fix it.
+        -->
+        <item name="android:overlapAnchor">true</item>
+    </style>
+
+</resources>

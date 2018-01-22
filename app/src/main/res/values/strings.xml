@@ -11,4 +11,18 @@
     <string name="choose_theme">选择主题</string>
     <string name="language">语言</string>
 
+    <string name="green">原谅绿</string>
+    <string name="red">姨妈红</string>
+    <string name="pink">哔哩粉</string>
+    <string name="indigo">颐堤蓝</string>
+    <string name="teal">水鸭绿</string>
+    <string name="orange">伊藤橙</string>
+    <string name="purple">基佬紫</string>
+    <string name="blue">知乎蓝</string>
+    <string name="brown">古铜棕</string>
+    <string name="grey">低调灰</string>
+    <string name="white">今夜白</string>
+    <string name="black">高端黑</string>
+    <string name="dark">夜间模式</string>
+
 </resources>

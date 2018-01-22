@@ -24,11 +24,33 @@ public class ThemeHelper {
     @StyleRes
     public static int getTheme(String theme) {
         switch (theme) {
-            case Constants.LIGHT_TEAL:
-                return R.style.ThemeLightTeal_Teal;
+            case Constants.GREEN:
+                return R.style.ThemeGreen;
+            case Constants.RED:
+                return R.style.ThemeRed;
+            case Constants.PINK:
+                return R.style.ThemePink;
+            case Constants.INDIGO:
+                return R.style.ThemeIndigo;
+            case Constants.TEAL:
+                return R.style.ThemeTeal;
+            case Constants.ORANGE:
+                return R.style.ThemeTeal;
+            case Constants.PURPLE:
+                return R.style.ThemeTeal;
+            case Constants.BLUE:
+                return R.style.ThemeTeal;
+            case Constants.BROWN:
+                return R.style.ThemeTeal;
+            case Constants.GREY:
+                return R.style.ThemeTeal;
+            case Constants.WHITE:
+                return R.style.ThemeTeal;
+            case Constants.BLACK:
+                return R.style.ThemeTeal;
             case Constants.DARK:
-                return R.style.ThemeDark_Teal;
+                return R.style.ThemeDark;
         }
-        return R.style.ThemeLightTeal_Teal;
+        return R.style.ThemeTeal;
     }
 }

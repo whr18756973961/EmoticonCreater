@@ -26,6 +26,10 @@
     <!--5%  	0D-->
     <!--0%  	00-->
 
+    <color name="bilibili_pink_500">#FB7299</color>
+    <color name="bilibili_pink_700">#EC407A</color>
+    <color name="bilibili_pink_accent_700">#FF4081</color>
+
     <color name="transparent">#00FFFFFF</color>
     <color name="white">#FFFFFF</color>
 
