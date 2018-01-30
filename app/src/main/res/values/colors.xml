@@ -32,9 +32,16 @@
 
     <color name="transparent">#00FFFFFF</color>
     <color name="white">#FFFFFF</color>
-
-    <color name="black_overlay">#66000000</color>
     <color name="black_light">#212121</color>
+
+    <color name="material_light_white">#EEEEEE</color>
+    <color name="material_white">#FFFFFF</color>
+
+    <color name="material_black_900">#22252A</color>
+    <color name="material_black_700">#474747</color>
+    <color name="material_black_500">#757575</color>
+    <color name="material_light_black">#000000</color>
+
 
     <color name="material_amber_100">#FFECB3</color>
     <color name="material_amber_200">#FFE082</color>
@@ -159,7 +166,6 @@
     <color name="material_indigo_accent_200">#536DFE</color>
     <color name="material_indigo_accent_400">#3D5AFE</color>
     <color name="material_indigo_accent_700">#304FFE</color>
-    <color name="material_light_black">#000000</color>
     <color name="material_light_blue_100">#B3E5FC</color>
     <color name="material_light_blue_200">#81D4FA</color>
     <color name="material_light_blue_300">#4FC3F7</color>
@@ -188,8 +194,6 @@
     <color name="material_light_green_accent_200">#B2FF59</color>
     <color name="material_light_green_accent_400">#76FF03</color>
     <color name="material_light_green_accent_700">#64DD17</color>
-    <color name="material_light_white">#EEEEEE</color>
-    <color name="material_white">#FFFFFF</color>
     <color name="material_lime_100">#F0F4C3</color>
     <color name="material_lime_200">#E6EE9C</color>
     <color name="material_lime_300">#DCE775</color>
@@ -289,8 +293,4 @@
     <color name="material_yellow_accent_400">#FFEA00</color>
     <color name="material_yellow_accent_700">#FFD600</color>
 
-    <color name="commit_file_added_color">#28a745</color>
-    <color name="commit_file_removed_color">#cb2431</color>
-    <color name="commit_file_renamed_color">#6a737d</color>
-    <color name="commit_file_modified_color">#dbab09</color>
 </resources>

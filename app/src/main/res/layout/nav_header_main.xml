@@ -25,12 +25,13 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/spacing_large"
         android:text="OpenHub"
-        android:textAppearance="@style/TextAppearance.AppCompat.Body1"/>
+        android:textColor="?attr/title_color"/>
 
     <TextView
         android:id="@+id/tv_mail"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:textColor="?attr/subtitle_color"
         android:text="An android client for GitHub."/>
 
 </LinearLayout>

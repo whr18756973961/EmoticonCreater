@@ -35,17 +35,17 @@ public class ThemeHelper {
             case Constants.TEAL:
                 return R.style.ThemeTeal;
             case Constants.ORANGE:
-                return R.style.ThemeTeal;
+                return R.style.ThemeOrange;
             case Constants.PURPLE:
-                return R.style.ThemeTeal;
+                return R.style.ThemePurple;
             case Constants.BLUE:
-                return R.style.ThemeTeal;
+                return R.style.ThemeBlue;
             case Constants.BROWN:
-                return R.style.ThemeTeal;
+                return R.style.ThemeBrown;
             case Constants.GREY:
-                return R.style.ThemeTeal;
+                return R.style.ThemeGrey;
             case Constants.WHITE:
-                return R.style.ThemeTeal;
+                return R.style.ThemeWhite;
             case Constants.BLACK:
                 return R.style.ThemeTeal;
             case Constants.DARK:

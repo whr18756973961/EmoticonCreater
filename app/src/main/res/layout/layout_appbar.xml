@@ -5,14 +5,14 @@
     android:id="@+id/app_bar"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:theme="?appbar_theme">
+    android:theme="?attr/appbar_theme">
 
     <android.support.v7.widget.Toolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
         android:background="?attr/colorPrimary"
-        app:popupTheme="?popup_theme">
+        app:popupTheme="?attr/popup_theme">
 
     </android.support.v7.widget.Toolbar>
 
