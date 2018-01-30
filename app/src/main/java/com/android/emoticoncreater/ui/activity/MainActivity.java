@@ -32,6 +32,7 @@ public class MainActivity extends BaseActivity {
     private CoordinatorLayout mRootView;
     private Toolbar mToolbar;
     private TextView tvTripleSend;
+    private TextView tvSecret;
 
     private int permissionPosition = 0;//当前请求权限位置
     private String[] permissions;
@@ -45,6 +46,9 @@ public class MainActivity extends BaseActivity {
             switch (v.getId()) {
                 case R.id.tv_triple_send:
                     startActivity(new Intent(MainActivity.this, TripleSendActivity.class));
+                    break;
+                case R.id.tv_secret:
+                    startActivity(new Intent(MainActivity.this, TellTheSecretActivity.class));
                     break;
             }
         }
@@ -133,11 +137,13 @@ public class MainActivity extends BaseActivity {
         mRootView = (CoordinatorLayout) findViewById(R.id.rootview);
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
         tvTripleSend = (TextView) findViewById(R.id.tv_triple_send);
+        tvSecret = (TextView) findViewById(R.id.tv_secret);
 
         mToolbar.setTitle(getString(R.string.app_name));
         setSupportActionBar(mToolbar);
 
         tvTripleSend.setOnClickListener(mClick);
+        tvSecret.setOnClickListener(mClick);
     }
 
     private void requestPermission() {
