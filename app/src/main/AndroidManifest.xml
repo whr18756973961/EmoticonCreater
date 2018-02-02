@@ -40,6 +40,9 @@
         <activity
             android:name=".ui.activity.TellTheSecretActivity"
             android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.activity.SecretListActivity"
+            android:screenOrientation="portrait" />
 
     </application>
 

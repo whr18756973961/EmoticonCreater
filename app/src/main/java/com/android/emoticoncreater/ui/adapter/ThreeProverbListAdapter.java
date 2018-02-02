@@ -18,7 +18,7 @@ import java.util.List;
 
 public class ThreeProverbListAdapter extends RecyclerView.Adapter {
 
-    private OnListClickListener mListClick;
+    private IOnListClickListener mListClick;
     private List<ThreeProverbBean> mList;
     private LayoutInflater mInflater;
 
@@ -85,7 +85,7 @@ public class ThreeProverbListAdapter extends RecyclerView.Adapter {
         }
     }
 
-    public void setListClick(OnListClickListener listClick) {
+    public void setListClick(IOnListClickListener listClick) {
         this.mListClick = listClick;
     }
 
@@ -96,7 +96,7 @@ public class ThreeProverbListAdapter extends RecyclerView.Adapter {
                 final int position = (int) v.getTag();
                 switch (v.getId()) {
                     case R.id.tv_delete:
-                        mListClick.onTagClick(OnListClickListener.ITEM_TAG0, position);
+                        mListClick.onTagClick(IOnListClickListener.ITEM_TAG0, position);
                         break;
                     default:
                         mListClick.onItemClick(position);

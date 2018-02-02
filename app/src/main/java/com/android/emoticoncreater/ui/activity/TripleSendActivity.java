@@ -3,16 +3,13 @@ package com.android.emoticoncreater.ui.activity;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.design.widget.CoordinatorLayout;
-import android.support.design.widget.Snackbar;
-import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.TextView;
 
 import com.android.emoticoncreater.R;
 import com.android.emoticoncreater.app.BaseActivity;
@@ -44,8 +41,6 @@ public class TripleSendActivity extends BaseActivity {
     private static final int REQUEST_CODE_PICTURE3 = 1003;
     private static final int REQUEST_CODE_TO_PROVERB = 1004;
 
-    private CoordinatorLayout mRootView;
-    private Toolbar mToolbar;
     private EditText etTitle;
     private ImageView ivPicture1;
     private ImageView ivPicture2;
@@ -53,10 +48,10 @@ public class TripleSendActivity extends BaseActivity {
     private EditText etName1;
     private EditText etName2;
     private EditText etName3;
-    private TextView tvDoCreate;
+    private Button btnDoCreate;
     private ImageView ivPreview;
-    private TextView tvDoSave;
-    private TextView tvDoSend;
+    private Button btnDoSave;
+    private Button btnDoSend;
 
     private String mPath1;
     private String mPath2;
@@ -68,13 +63,48 @@ public class TripleSendActivity extends BaseActivity {
     private LiteOrmHelper mDBHelper;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_triple_send);
+    protected int getContentView() {
+        return R.layout.activity_triple_send;
+    }
 
-        initData();
-        initView();
+    @Override
+    protected void initData() {
+        super.initData();
+        mSavePath = SDCardUtils.getSDCardDir() + Constants.PATH_TRIPLE_SEND;
+        mTempPath = SDCardUtils.getExternalCacheDir(this);
+        mUsedPath = SDCardUtils.getSDCardDir() + Constants.PATH_USED_PICTURE;
 
+        FileUtils.createdirectory(mSavePath);
+        FileUtils.createdirectory(mTempPath);
+        FileUtils.createdirectory(mUsedPath);
+
+        mDBHelper = new LiteOrmHelper(this);
+    }
+
+    @Override
+    protected void initView(Bundle savedInstanceState) {
+        super.initView(savedInstanceState);
+        setToolbarBackEnable();
+        setToolbarTitle("表情三连发");
+
+        etTitle = (EditText) findViewById(R.id.et_title);
+        ivPicture1 = (ImageView) findViewById(R.id.iv_picture1);
+        ivPicture2 = (ImageView) findViewById(R.id.iv_picture2);
+        ivPicture3 = (ImageView) findViewById(R.id.iv_picture3);
+        etName1 = (EditText) findViewById(R.id.et_name1);
+        etName2 = (EditText) findViewById(R.id.et_name2);
+        etName3 = (EditText) findViewById(R.id.et_name3);
+        btnDoCreate = (Button) findViewById(R.id.btn_do_create);
+        ivPreview = (ImageView) findViewById(R.id.iv_preview);
+        btnDoSave = (Button) findViewById(R.id.btn_do_save);
+        btnDoSend = (Button) findViewById(R.id.btn_do_send);
+
+        ivPicture1.setOnClickListener(mClick);
+        ivPicture2.setOnClickListener(mClick);
+        ivPicture3.setOnClickListener(mClick);
+        btnDoCreate.setOnClickListener(mClick);
+        btnDoSave.setOnClickListener(mClick);
+        btnDoSend.setOnClickListener(mClick);
     }
 
     @Override
@@ -145,45 +175,6 @@ public class TripleSendActivity extends BaseActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    private void initData() {
-        mSavePath = SDCardUtils.getSDCardDir() + Constants.PATH_TRIPLE_SEND;
-        mTempPath = SDCardUtils.getExternalCacheDir(this);
-        mUsedPath = SDCardUtils.getSDCardDir() + Constants.PATH_USED_PICTURE;
-
-        FileUtils.createdirectory(mSavePath);
-        FileUtils.createdirectory(mTempPath);
-        FileUtils.createdirectory(mUsedPath);
-
-        mDBHelper = new LiteOrmHelper(this);
-    }
-
-    private void initView() {
-        mRootView = (CoordinatorLayout) findViewById(R.id.rootview);
-        mToolbar = (Toolbar) findViewById(R.id.toolbar);
-        etTitle = (EditText) findViewById(R.id.et_title);
-        ivPicture1 = (ImageView) findViewById(R.id.iv_picture1);
-        ivPicture2 = (ImageView) findViewById(R.id.iv_picture2);
-        ivPicture3 = (ImageView) findViewById(R.id.iv_picture3);
-        etName1 = (EditText) findViewById(R.id.et_name1);
-        etName2 = (EditText) findViewById(R.id.et_name2);
-        etName3 = (EditText) findViewById(R.id.et_name3);
-        tvDoCreate = (TextView) findViewById(R.id.tv_do_create);
-        ivPreview = (ImageView) findViewById(R.id.iv_preview);
-        tvDoSave = (TextView) findViewById(R.id.tv_do_save);
-        tvDoSend = (TextView) findViewById(R.id.tv_do_send);
-
-        mToolbar.setTitle("表情三连发");
-        setSupportActionBar(mToolbar);
-
-        ivPicture1.setOnClickListener(mClick);
-        ivPicture2.setOnClickListener(mClick);
-        ivPicture3.setOnClickListener(mClick);
-        tvDoCreate.setOnClickListener(mClick);
-        tvDoSave.setOnClickListener(mClick);
-        tvDoSend.setOnClickListener(mClick);
-
-    }
-
     private void selectPicture(int requestCode) {
         PictureSelector.create(this)
                 .openGallery(PictureMimeType.ofImage())
@@ -219,19 +210,19 @@ public class TripleSendActivity extends BaseActivity {
         final String name2 = etName2.getText().toString();
         final String name3 = etName3.getText().toString();
         if (TextUtils.isEmpty(title)) {
-            Snackbar.make(mRootView, "请先输入标题", Snackbar.LENGTH_LONG).show();
+            showSnackbar("请先输入标题");
         } else if (TextUtils.isEmpty(mPath1)) {
-            Snackbar.make(mRootView, "请先选择图片1", Snackbar.LENGTH_LONG).show();
+            showSnackbar("请先选择图片1");
         } else if (TextUtils.isEmpty(mPath2)) {
-            Snackbar.make(mRootView, "请先选择图片2", Snackbar.LENGTH_LONG).show();
+            showSnackbar("请先选择图片2");
         } else if (TextUtils.isEmpty(mPath3)) {
-            Snackbar.make(mRootView, "请先选择图片3", Snackbar.LENGTH_LONG).show();
+            showSnackbar("请先选择图片3");
         } else if (TextUtils.isEmpty(name1)) {
-            Snackbar.make(mRootView, "请输入图片1文字内容", Snackbar.LENGTH_LONG).show();
+            showSnackbar("请输入图片1文字内容");
         } else if (TextUtils.isEmpty(name2)) {
-            Snackbar.make(mRootView, "请输入图片2文字内容", Snackbar.LENGTH_LONG).show();
+            showSnackbar("请输入图片2文字内容");
         } else if (TextUtils.isEmpty(name3)) {
-            Snackbar.make(mRootView, "请输入图片3文字内容", Snackbar.LENGTH_LONG).show();
+            showSnackbar("请输入图片3文字内容");
         } else {
             showProgress("图片处理中...");
             ThreadPoolUtil.getInstache().cachedExecute(new Runnable() {
@@ -252,9 +243,9 @@ public class TripleSendActivity extends BaseActivity {
 
                                 refreshAlbum(mCurrentImage);
 
-                                Snackbar.make(mRootView, "保存路径：" + filePath, Snackbar.LENGTH_LONG).show();
+                                showSnackbar("保存路径：" + filePath);
                             } else {
-                                Snackbar.make(mRootView, "生成失败", Snackbar.LENGTH_LONG).show();
+                                showSnackbar("生成失败");
                             }
                             hideProgress();
                         }
@@ -299,13 +290,13 @@ public class TripleSendActivity extends BaseActivity {
         final String name2 = etName2.getText().toString();
         final String name3 = etName3.getText().toString();
         if (TextUtils.isEmpty(title)) {
-            Snackbar.make(mRootView, "请先输入标题", Snackbar.LENGTH_LONG).show();
+            showSnackbar("请先输入标题");
         } else if (TextUtils.isEmpty(name1)) {
-            Snackbar.make(mRootView, "请输入图片1文字内容", Snackbar.LENGTH_LONG).show();
+            showSnackbar("请输入图片1文字内容");
         } else if (TextUtils.isEmpty(name2)) {
-            Snackbar.make(mRootView, "请输入图片2文字内容", Snackbar.LENGTH_LONG).show();
+            showSnackbar("请输入图片2文字内容");
         } else if (TextUtils.isEmpty(name3)) {
-            Snackbar.make(mRootView, "请输入图片3文字内容", Snackbar.LENGTH_LONG).show();
+            showSnackbar("请输入图片3文字内容");
         } else {
             ThreeProverbBean proverb = mDBHelper.queryFirst(ThreeProverbBean.class,
                     "title == ? and firstProverb == ? and secondProverb == ? and thirdProverb == ?",
@@ -318,9 +309,9 @@ public class TripleSendActivity extends BaseActivity {
                 proverb.setThirdProverb(name3);
                 proverb.setUseTimes(1);
                 mDBHelper.save(proverb);
-                Snackbar.make(mRootView, "保存成功", Snackbar.LENGTH_LONG).show();
+                showSnackbar("保存成功");
             } else {
-                Snackbar.make(mRootView, "这套语录已在“怼人语录”里", Snackbar.LENGTH_LONG).show();
+                showSnackbar("这套语录已在“怼人语录”里");
             }
         }
     }
@@ -336,7 +327,7 @@ public class TripleSendActivity extends BaseActivity {
             startActivity(Intent.createChooser(intent, ""));
         } else {
             ivPreview.setImageResource(0);
-            Snackbar.make(mRootView, "图片不存在", Snackbar.LENGTH_LONG).show();
+            showSnackbar("图片不存在");
         }
     }
 
@@ -354,13 +345,13 @@ public class TripleSendActivity extends BaseActivity {
                 case R.id.iv_picture3:
                     selectPicture(REQUEST_CODE_PICTURE3);
                     break;
-                case R.id.tv_do_create:
+                case R.id.btn_do_create:
                     doCreatePicture();
                     break;
-                case R.id.tv_do_save:
+                case R.id.btn_do_save:
                     doSaveProverb();
                     break;
-                case R.id.tv_do_send:
+                case R.id.btn_do_send:
                     doSend();
                     break;
             }
