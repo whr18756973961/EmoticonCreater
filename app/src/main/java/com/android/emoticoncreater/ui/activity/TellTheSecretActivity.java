@@ -80,39 +80,32 @@ public class TellTheSecretActivity extends BaseActivity {
 
     }
 
+    @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+        final SecretBean secret = intent.getParcelableExtra(SecretEditActivity.KEY_NEW_SECRET);
+        if (secret != null) {
+            final int index = mSecretList.size();
+            mSecretList.add(secret);
+            mSecretAdapter.notifyItemInserted(index);
+            rvSecretList.scrollToPosition(index);
+        }
+    }
+
     private void doAdd() {
         if (mSecretList.size() >= 4) {
             showSnackbar("最多只能添加4个秘密");
         } else {
             SecretListActivity.show(this);
-//            final int[] resourceIds = {
-//                    R.drawable.img_1,
-//                    R.drawable.img_2,
-//                    R.drawable.img_3,
-//                    R.drawable.img_4,
-//                    R.drawable.img_5
-//            };
-//            final String[] titles = {
-//                    "你女朋友是学JAVA的女装大佬",
-//                    "今年过年不放假，而且还没有工资",
-//                    "你头上的草原挺旺盛的",
-//                    "你女朋友脱下裤子比你还大",
-//                    "XXX他就是一个大傻逼"
-//            };
-//
-//            final int index = mSecretList.size();
-//
-//            final SecretBean secret = new SecretBean();
-//            secret.setResourceId(resourceIds[index]);
-//            secret.setTitle(titles[index]);
-//            mSecretList.add(secret);
-//            mSecretAdapter.notifyItemInserted(index);
-//            rvSecretList.scrollToPosition(index);
         }
     }
 
     private void doCreate() {
+        if (mSecretList.size() <= 0) {
+            showSnackbar("你还没添加秘密");
+        } else {
 
+        }
     }
 
     private View.OnClickListener mClick = new View.OnClickListener() {

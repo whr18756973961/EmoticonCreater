@@ -1,10 +1,13 @@
 package com.android.emoticoncreater.ui.activity;
 
 import android.app.Activity;
+import android.app.ActivityOptions;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Pair;
+import android.view.View;
 
 import com.android.emoticoncreater.R;
 import com.android.emoticoncreater.app.BaseActivity;
@@ -57,10 +60,14 @@ public class SecretListActivity extends BaseActivity {
 
     private OnListClickListener mListClick = new OnListClickListener() {
         @Override
-        public void onItemClick(Object object) {
+        public void onItemClick(View view, Object object) {
             if (object instanceof SecretBean) {
                 final SecretBean secret = (SecretBean) object;
-                //TODO 下一步
+                Pair<View, String> picturePair = Pair.create(view, getString(R.string.transition_name_secret));
+
+                ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation(SecretListActivity.this, picturePair);
+
+                SecretEditActivity.show(SecretListActivity.this, options, secret);
             }
         }
     };

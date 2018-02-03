@@ -1,6 +1,7 @@
 package com.android.emoticoncreater.ui.adapter;
 
 import android.support.annotation.IntDef;
+import android.view.View;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
@@ -26,6 +27,10 @@ public interface IOnListClickListener {
 
     //item点击事件，返回model
     void onItemClick(Object object);
+
+    void onItemClick(View view, int position);
+
+    void onItemClick(View view, Object object);
 
     //可根据tag来区分点击的是item内部哪个控件
     void onTagClick(@ItemView int tag, int position);

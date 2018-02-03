@@ -37,9 +37,9 @@ public class SecretPictureListAdapter extends RecyclerView.Adapter {
                 R.drawable.img_7, R.drawable.img_8, R.drawable.img_9, R.drawable.img_10
         };
         final String[] titles = {
-                "伏尔泰 + 乌蝇哥", "教皇 + 乌蝇哥", "金馆长 + 乌蝇哥",
-                "伏尔泰 + 教皇", "教皇 + 教皇", "金馆长 + 教皇",
-                "伏尔泰 + 教皇", "教皇 + 教皇", "金馆长 + 教皇", "教皇 + 教皇"
+                "福尔泰 + 乌蝇哥", "教皇 + 乌蝇哥", "金馆长 + 乌蝇哥",
+                "福尔泰 + 教皇", "教皇 + 教皇", "金馆长 + 教皇",
+                "福尔泰 + 教皇", "教皇 + 教皇", "金馆长 + 教皇", "教皇 + 教皇"
         };
         mList.clear();
         for (int i = 0; i < resourceIds.length; i++) {
@@ -101,7 +101,8 @@ public class SecretPictureListAdapter extends RecyclerView.Adapter {
         public void onClick(View v) {
             if (mListClick != null) {
                 final int position = (int) v.getTag();
-                mListClick.onItemClick(position);
+                final SecretBean secret = mList.get(position);
+                mListClick.onItemClick(v, secret);
             }
         }
     };
