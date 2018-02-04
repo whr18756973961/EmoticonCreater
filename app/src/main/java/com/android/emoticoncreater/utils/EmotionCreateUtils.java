@@ -76,6 +76,7 @@ public class EmotionCreateUtils {
         paint.reset();
         paint.setColor(textColor);
         paint.setTextSize(textSize);
+        paint.setFlags(Paint.FAKE_BOLD_TEXT_FLAG | Paint.ANTI_ALIAS_FLAG);
 
         final Rect titleRect = new Rect();
         paint.getTextBounds(title, 0, title.length(), titleRect);

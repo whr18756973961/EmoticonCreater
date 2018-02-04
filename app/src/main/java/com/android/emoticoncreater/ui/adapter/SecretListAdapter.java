@@ -52,7 +52,7 @@ public class SecretListAdapter extends RecyclerView.Adapter {
         final int resourceId = model.getResourceId();
         final String title = model.getTitle();
 
-        ImageLoaderFactory.getLoader().loadImageCenterCrop(mContext, holder.ivPicture, resourceId);
+        ImageLoaderFactory.getLoader().loadImageFitCenter(mContext, holder.ivPicture, resourceId, 0, 0);
         holder.tvTitle.setText(title);
 
         holder.ibDelete.setTag(holder.getAdapterPosition());

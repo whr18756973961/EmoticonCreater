@@ -2,9 +2,11 @@ package com.android.emoticoncreater.ui.activity;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.helper.ItemTouchHelper;
 import android.view.View;
 import android.widget.Button;
 
@@ -17,8 +19,11 @@ import com.android.emoticoncreater.ui.adapter.SecretListAdapter;
 import com.android.emoticoncreater.utils.FileUtils;
 import com.android.emoticoncreater.utils.SDCardUtils;
 import com.android.emoticoncreater.utils.SecretUtils;
+import com.android.emoticoncreater.utils.ThreadPoolUtil;
 
+import java.io.File;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -34,8 +39,9 @@ public class TellTheSecretActivity extends BaseActivity {
     private List<SecretBean> mSecretList;
     private SecretListAdapter mSecretAdapter;
 
+    private ItemTouchHelper mItemTouchHelper;
+
     private String mSavePath;
-    private String mTempPath;
 
     public static void show(Activity activity) {
         Intent intent = new Intent();
@@ -52,14 +58,14 @@ public class TellTheSecretActivity extends BaseActivity {
     protected void initData() {
         super.initData();
         mSavePath = SDCardUtils.getSDCardDir() + Constants.PATH_SECRET;
-        mTempPath = SDCardUtils.getExternalCacheDir(this);
 
         FileUtils.createdirectory(mSavePath);
-        FileUtils.createdirectory(mTempPath);
 
         mSecretList = new ArrayList<>();
         mSecretAdapter = new SecretListAdapter(this, mSecretList);
         mSecretAdapter.setListClick(mListClick);
+
+        mItemTouchHelper = new ItemTouchHelper(mCallback);
     }
 
     @Override
@@ -75,6 +81,8 @@ public class TellTheSecretActivity extends BaseActivity {
 
         rvSecretList.setLayoutManager(new LinearLayoutManager(this));
         rvSecretList.setAdapter(mSecretAdapter);
+
+        mItemTouchHelper.attachToRecyclerView(rvSecretList);
 
         btnAdd.setOnClickListener(mClick);
         btnDoCreate.setOnClickListener(mClick);
@@ -94,8 +102,8 @@ public class TellTheSecretActivity extends BaseActivity {
     }
 
     private void doAdd() {
-        if (mSecretList.size() >= 4) {
-            showSnackbar("最多只能添加4个秘密");
+        if (mSecretList.size() >= 10) {
+            showSnackbar("最多只能添加10个秘密");
         } else {
             SecretListActivity.show(this);
         }
@@ -105,7 +113,35 @@ public class TellTheSecretActivity extends BaseActivity {
         if (mSecretList.size() <= 0) {
             showSnackbar("你还没添加秘密");
         } else {
-            SecretUtils.createSecret(getResources(), mSecretList, mSavePath);
+            showProgress("图片处理中...");
+            ThreadPoolUtil.getInstache().cachedExecute(new Runnable() {
+                @Override
+                public void run() {
+                    final File imageFile = SecretUtils.createSecret(getResources(), mSecretList, mSavePath);
+
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            if (imageFile.exists()) {
+                                final String filePath = imageFile.getAbsolutePath();
+                                refreshAlbum(imageFile);
+
+                                ShowSecretActivity.show(TellTheSecretActivity.this, filePath);
+                            } else {
+                                showSnackbar("生成失败，图片不存在");
+                            }
+                            hideProgress();
+                        }
+                    });
+                }
+            });
+        }
+    }
+
+    private void refreshAlbum(File file) {
+        if (file != null && file.exists()) {
+            final Uri uri = Uri.fromFile(file);
+            sendBroadcast(new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE, uri));
         }
     }
 
@@ -134,6 +170,30 @@ public class TellTheSecretActivity extends BaseActivity {
                     mSecretAdapter.notifyItemRangeChanged(position, count - position);
                 }
             }
+        }
+    };
+
+    private ItemTouchHelper.Callback mCallback = new ItemTouchHelper.Callback() {
+        @Override
+        public int getMovementFlags(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder) {
+            final int dragFlags = ItemTouchHelper.UP | ItemTouchHelper.DOWN;
+            final int swipeFlags = 0;
+            return makeMovementFlags(dragFlags, swipeFlags);
+        }
+
+        @Override
+        public boolean onMove(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, RecyclerView.ViewHolder target) {
+            final int fromPosition = viewHolder.getAdapterPosition();
+            final int toPosition = target.getAdapterPosition();
+
+            Collections.swap(mSecretList, fromPosition, toPosition);
+            mSecretAdapter.notifyItemMoved(fromPosition, toPosition);
+            return true;
+        }
+
+        @Override
+        public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction) {
+
         }
     };
 }

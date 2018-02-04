@@ -29,8 +29,10 @@ public class SecretUtils {
 
     public static File createSecret(Resources resources, final List<SecretBean> secretList, final String savePath) {
         final Paint paint = new Paint();
+        paint.reset();
         paint.setColor(textColor);
         paint.setTextSize(textSize);
+        paint.setFlags(Paint.FAKE_BOLD_TEXT_FLAG | Paint.ANTI_ALIAS_FLAG);
 
         final int totalWidth = padding + pictureWidth + padding;
         int totalHeight = 0;
@@ -55,6 +57,7 @@ public class SecretUtils {
         paint.reset();
         paint.setColor(textColor);
         paint.setTextSize(textSize);
+        paint.setFlags(Paint.FAKE_BOLD_TEXT_FLAG | Paint.ANTI_ALIAS_FLAG);
 
         totalHeight = 0;
         for (SecretBean secret : secretList) {
