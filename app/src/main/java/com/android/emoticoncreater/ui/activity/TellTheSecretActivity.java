@@ -16,6 +16,7 @@ import com.android.emoticoncreater.ui.adapter.OnListClickListener;
 import com.android.emoticoncreater.ui.adapter.SecretListAdapter;
 import com.android.emoticoncreater.utils.FileUtils;
 import com.android.emoticoncreater.utils.SDCardUtils;
+import com.android.emoticoncreater.utils.SecretUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -104,7 +105,7 @@ public class TellTheSecretActivity extends BaseActivity {
         if (mSecretList.size() <= 0) {
             showSnackbar("你还没添加秘密");
         } else {
-
+            SecretUtils.createSecret(getResources(), mSecretList, mSavePath);
         }
     }
 

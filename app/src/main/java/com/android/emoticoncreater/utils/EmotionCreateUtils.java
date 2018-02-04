@@ -9,7 +9,6 @@ import android.graphics.Rect;
 import android.graphics.RectF;
 
 import java.io.File;
-import java.io.FileOutputStream;
 
 /**
  * 图片旋转处理工具类
@@ -26,7 +25,6 @@ public class EmotionCreateUtils {
     private static final int pictureHeight = 200;
     private static final int textHeight = 50;
     private static final int padding = 10;
-    private static final int quality = 100;
 
     public static File createExpression(final String title,
                                         final String path1,
@@ -90,7 +88,7 @@ public class EmotionCreateUtils {
         drawText(canvas, paint, name3, left3);
 
         final String imageName = System.currentTimeMillis() + ".jpg";
-        final File newFile = saveBitmapToJpg(picture, savePath, imageName);
+        final File newFile = ImageUtils.saveBitmapToJpg(picture, savePath, imageName);
         picture.recycle();
 
         return newFile;
@@ -129,22 +127,5 @@ public class EmotionCreateUtils {
         final float nameTop = textHeight + pictureHeight + (textHeight - textSize) / 2f - nameRect.top;
         final float nameLeft1 = (pictureWidth - nameRect.right) / 2f + left;
         canvas.drawText(text, nameLeft1, nameTop, paint);
-    }
-
-    private static File saveBitmapToJpg(Bitmap bitmap, String path, String bitName) {
-        File file = new File(path);
-        try {
-            if (!file.exists()) {
-                file.mkdir();
-            }
-            file = new File(path, bitName);
-            FileOutputStream out = new FileOutputStream(file);
-            bitmap.compress(Bitmap.CompressFormat.JPEG, quality, out);
-            out.flush();
-            out.close();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return file;
     }
 }
