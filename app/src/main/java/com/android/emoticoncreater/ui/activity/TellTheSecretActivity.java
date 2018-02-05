@@ -39,6 +39,7 @@ public class TellTheSecretActivity extends BaseActivity {
     private List<SecretBean> mSecretList;
     private SecretListAdapter mSecretAdapter;
 
+    private LinearLayoutManager mLayoutManager;
     private ItemTouchHelper mItemTouchHelper;
 
     private String mSavePath;
@@ -65,6 +66,7 @@ public class TellTheSecretActivity extends BaseActivity {
         mSecretAdapter = new SecretListAdapter(this, mSecretList);
         mSecretAdapter.setListClick(mListClick);
 
+        mLayoutManager = new LinearLayoutManager(this);
         mItemTouchHelper = new ItemTouchHelper(mCallback);
     }
 
@@ -79,7 +81,7 @@ public class TellTheSecretActivity extends BaseActivity {
         btnAdd = (Button) findViewById(R.id.btn_add);
         btnDoCreate = (Button) findViewById(R.id.btn_do_create);
 
-        rvSecretList.setLayoutManager(new LinearLayoutManager(this));
+        rvSecretList.setLayoutManager(mLayoutManager);
         rvSecretList.setAdapter(mSecretAdapter);
 
         mItemTouchHelper.attachToRecyclerView(rvSecretList);

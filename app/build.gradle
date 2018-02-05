@@ -47,4 +47,7 @@ dependencies {
     annotationProcessor 'com.github.bumptech.glide:compiler:4.3.1'
     implementation 'com.github.LuckSiege.PictureSelector:picture_library:v2.1.7'
     implementation files('libs/lite-orm-1.9.2.jar')
+    implementation 'com.tencent.bugly:crashreport:2.6.6'
+    debugImplementation 'com.squareup.leakcanary:leakcanary-android:1.5.4'
+    releaseImplementation 'com.squareup.leakcanary:leakcanary-android-no-op:1.5.4'
 }

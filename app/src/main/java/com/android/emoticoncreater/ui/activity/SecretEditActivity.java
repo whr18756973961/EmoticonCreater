@@ -13,7 +13,6 @@ import android.widget.ImageView;
 import com.android.emoticoncreater.R;
 import com.android.emoticoncreater.app.BaseActivity;
 import com.android.emoticoncreater.model.SecretBean;
-import com.android.emoticoncreater.widget.imageloader.ImageLoaderFactory;
 
 /**
  * 编辑秘密
@@ -64,7 +63,7 @@ public class SecretEditActivity extends BaseActivity {
             final int resourceId = mSecret.getResourceId();
             final String title = mSecret.getTitle();
 
-            ImageLoaderFactory.getLoader().loadImageFitCenter(this, ivPicture, resourceId, 0, 0);
+            ivPicture.setImageResource(resourceId);
             etTitle.setHint(title);
         }
 

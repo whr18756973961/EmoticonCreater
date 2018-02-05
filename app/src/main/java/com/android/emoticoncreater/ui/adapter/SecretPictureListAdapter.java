@@ -10,7 +10,6 @@ import android.widget.TextView;
 
 import com.android.emoticoncreater.R;
 import com.android.emoticoncreater.model.SecretBean;
-import com.android.emoticoncreater.widget.imageloader.ImageLoaderFactory;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,12 +21,10 @@ import java.util.List;
 public class SecretPictureListAdapter extends RecyclerView.Adapter {
 
     private IOnListClickListener mListClick;
-    private Context mContext;
     private List<SecretBean> mList;
     private LayoutInflater mInflater;
 
     public SecretPictureListAdapter(Context context) {
-        mContext = context;
         mList = new ArrayList<>();
         mInflater = LayoutInflater.from(context);
 
@@ -70,8 +67,7 @@ public class SecretPictureListAdapter extends RecyclerView.Adapter {
         final int resourceId = model.getResourceId();
         final String title = model.getTitle();
 
-        ImageLoaderFactory.getLoader().loadImageFitCenter(mContext, holder.ivPicture, resourceId, 0, 0);
-
+        holder.ivPicture.setImageResource(resourceId);
         holder.tvTitle.setText(title);
 
         holder.itemView.setTag(holder.getAdapterPosition());
