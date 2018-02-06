@@ -4,11 +4,13 @@ import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
 
 import com.android.emoticoncreater.R;
 import com.android.emoticoncreater.app.BaseActivity;
@@ -33,8 +35,7 @@ import java.util.List;
 public class TellTheSecretActivity extends BaseActivity {
 
     private RecyclerView rvSecretList;
-    private Button btnAdd;
-    private Button btnDoCreate;
+    private FloatingActionButton btnAdd;
 
     private List<SecretBean> mSecretList;
     private SecretListAdapter mSecretAdapter;
@@ -78,8 +79,7 @@ public class TellTheSecretActivity extends BaseActivity {
         setToolbarTitle("告诉你个秘密");
 
         rvSecretList = (RecyclerView) findViewById(R.id.rv_secret_list);
-        btnAdd = (Button) findViewById(R.id.btn_add);
-        btnDoCreate = (Button) findViewById(R.id.btn_do_create);
+        btnAdd = (FloatingActionButton) findViewById(R.id.btn_add);
 
         rvSecretList.setLayoutManager(mLayoutManager);
         rvSecretList.setAdapter(mSecretAdapter);
@@ -87,8 +87,6 @@ public class TellTheSecretActivity extends BaseActivity {
         mItemTouchHelper.attachToRecyclerView(rvSecretList);
 
         btnAdd.setOnClickListener(mClick);
-        btnDoCreate.setOnClickListener(mClick);
-
     }
 
     @Override
@@ -101,6 +99,21 @@ public class TellTheSecretActivity extends BaseActivity {
             mSecretAdapter.notifyItemInserted(index);
             rvSecretList.scrollToPosition(index);
         }
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (R.id.action_done == item.getItemId()) {
+            doCreate();
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_create_secret, menu);
+        return super.onCreateOptionsMenu(menu);
     }
 
     private void doAdd() {

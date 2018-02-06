@@ -5,8 +5,8 @@ import android.app.ActivityOptions;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.view.View;
-import android.widget.Button;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.widget.EditText;
 import android.widget.ImageView;
 
@@ -25,7 +25,6 @@ public class SecretEditActivity extends BaseActivity {
 
     private ImageView ivPicture;
     private EditText etTitle;
-    private Button btnAdd;
 
     private SecretBean mSecret;
 
@@ -57,7 +56,6 @@ public class SecretEditActivity extends BaseActivity {
 
         ivPicture = (ImageView) findViewById(R.id.iv_picture);
         etTitle = (EditText) findViewById(R.id.et_title);
-        btnAdd = (Button) findViewById(R.id.btn_add);
 
         if (mSecret != null) {
             final int resourceId = mSecret.getResourceId();
@@ -67,7 +65,21 @@ public class SecretEditActivity extends BaseActivity {
             etTitle.setHint(title);
         }
 
-        btnAdd.setOnClickListener(mClick);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (R.id.action_done == item.getItemId()) {
+            doAdd();
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_create_secret, menu);
+        return super.onCreateOptionsMenu(menu);
     }
 
     private void doAdd() {
@@ -84,15 +96,4 @@ public class SecretEditActivity extends BaseActivity {
             startActivity(intent);
         }
     }
-
-    private View.OnClickListener mClick = new View.OnClickListener() {
-        @Override
-        public void onClick(View v) {
-            switch (v.getId()) {
-                case R.id.btn_add:
-                    doAdd();
-                    break;
-            }
-        }
-    };
 }
