@@ -3,7 +3,7 @@ package com.android.emoticoncreater.ui.activity;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
 import com.android.emoticoncreater.R;
@@ -56,7 +56,7 @@ public class ThreeProverbListActivity extends BaseActivity {
         setToolbarTitle("怼人语录");
 
         rvProverbList = (RecyclerView) findViewById(R.id.rv_proverb_list);
-        rvProverbList.setLayoutManager(new LinearLayoutManager(this));
+        rvProverbList.setLayoutManager(new GridLayoutManager(this, 2));
         rvProverbList.setAdapter(mProverbAdapter);
 
         getProverbList();

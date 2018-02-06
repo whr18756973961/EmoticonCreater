@@ -5,6 +5,8 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v4.view.ViewCompat;
+import android.support.v4.view.animation.FastOutSlowInInterpolator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
@@ -158,6 +160,13 @@ public class TellTheSecretActivity extends BaseActivity {
         }
     }
 
+    private void showFloatingButton() {
+        btnAdd.setVisibility(View.VISIBLE);
+        ViewCompat.animate(btnAdd).scaleX(1.0F).scaleY(1.0F).alpha(1.0F)
+                .setInterpolator(new FastOutSlowInInterpolator()).withLayer().setListener(null)
+                .start();
+    }
+
     private View.OnClickListener mClick = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
@@ -197,6 +206,7 @@ public class TellTheSecretActivity extends BaseActivity {
             mSecretList.remove(position);
             mSecretAdapter.notifyItemRemoved(position);
             mSecretAdapter.notifyItemRangeChanged(position, count - position);
+            showFloatingButton();
         }
     };
 }
