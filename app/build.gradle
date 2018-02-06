@@ -58,7 +58,6 @@ dependencies {
     implementation 'com.github.LuckSiege.PictureSelector:picture_library:v2.1.9'
     implementation files('libs/lite-orm-1.9.2.jar')
     implementation 'com.tencent.bugly:crashreport:2.6.6'
-    implementation 'com.tencent.bugly:nativecrashreport:3.3.1'
     debugImplementation 'com.squareup.leakcanary:leakcanary-android:1.5.4'
     releaseImplementation 'com.squareup.leakcanary:leakcanary-android-no-op:1.5.4'
 }

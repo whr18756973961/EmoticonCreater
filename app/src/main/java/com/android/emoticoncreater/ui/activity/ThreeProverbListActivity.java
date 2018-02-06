@@ -11,7 +11,6 @@ import com.android.emoticoncreater.app.BaseActivity;
 import com.android.emoticoncreater.config.Constants;
 import com.android.emoticoncreater.db.LiteOrmHelper;
 import com.android.emoticoncreater.model.ThreeProverbBean;
-import com.android.emoticoncreater.ui.adapter.IOnListClickListener;
 import com.android.emoticoncreater.ui.adapter.OnListClickListener;
 import com.android.emoticoncreater.ui.adapter.ThreeProverbListAdapter;
 import com.android.emoticoncreater.ui.dialog.DefaultAlertDialog;
@@ -85,7 +84,12 @@ public class ThreeProverbListActivity extends BaseActivity {
             public void onClick(DialogInterface dialog, int which) {
                 final ThreeProverbBean proverb = mProverbList.get(position);
                 mDBHelper.delete(proverb);
-                getProverbList();
+                final int count = mProverbList.size();
+                if (position >= 0 && position < count) {
+                    mProverbList.remove(position);
+                    mProverbAdapter.notifyItemRemoved(position);
+                    mProverbAdapter.notifyItemRangeChanged(position, count - position);
+                }
                 showSnackbar("删除成功");
             }
         });

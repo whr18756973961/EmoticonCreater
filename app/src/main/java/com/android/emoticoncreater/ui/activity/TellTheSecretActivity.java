@@ -16,7 +16,6 @@ import com.android.emoticoncreater.R;
 import com.android.emoticoncreater.app.BaseActivity;
 import com.android.emoticoncreater.config.Constants;
 import com.android.emoticoncreater.model.SecretBean;
-import com.android.emoticoncreater.ui.adapter.OnListClickListener;
 import com.android.emoticoncreater.ui.adapter.SecretListAdapter;
 import com.android.emoticoncreater.utils.FileUtils;
 import com.android.emoticoncreater.utils.SDCardUtils;
@@ -65,7 +64,6 @@ public class TellTheSecretActivity extends BaseActivity {
 
         mSecretList = new ArrayList<>();
         mSecretAdapter = new SecretListAdapter(this, mSecretList);
-        mSecretAdapter.setListClick(mListClick);
 
         mLayoutManager = new LinearLayoutManager(this);
         mItemTouchHelper = new ItemTouchHelper(mCallback);
@@ -174,25 +172,11 @@ public class TellTheSecretActivity extends BaseActivity {
         }
     };
 
-    private OnListClickListener mListClick = new OnListClickListener() {
-        @Override
-        public void onTagClick(int tag, int position) {
-            if (ITEM_TAG0 == tag) {
-                final int count = mSecretList.size();
-                if (position >= 0 && position < count) {
-                    mSecretList.remove(position);
-                    mSecretAdapter.notifyItemRemoved(position);
-                    mSecretAdapter.notifyItemRangeChanged(position, count - position);
-                }
-            }
-        }
-    };
-
     private ItemTouchHelper.Callback mCallback = new ItemTouchHelper.Callback() {
         @Override
         public int getMovementFlags(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder) {
             final int dragFlags = ItemTouchHelper.UP | ItemTouchHelper.DOWN;
-            final int swipeFlags = 0;
+            final int swipeFlags = ItemTouchHelper.LEFT;
             return makeMovementFlags(dragFlags, swipeFlags);
         }
 
@@ -208,7 +192,11 @@ public class TellTheSecretActivity extends BaseActivity {
 
         @Override
         public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction) {
-
+            final int count = mSecretList.size();
+            final int position = viewHolder.getAdapterPosition();
+            mSecretList.remove(position);
+            mSecretAdapter.notifyItemRemoved(position);
+            mSecretAdapter.notifyItemRangeChanged(position, count - position);
         }
     };
 }
