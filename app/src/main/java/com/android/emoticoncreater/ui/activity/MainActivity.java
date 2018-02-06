@@ -63,12 +63,6 @@ public class MainActivity extends BaseActivity {
         }
         permissions = requestList.toArray(new String[requestList.size()]);
         errorTips = errorTipsList.toArray(new String[errorTipsList.size()]);
-
-        final String dcimPath = SDCardUtils.getSDCardDir() + Constants.PATH_DCIM;
-        final String basePath = SDCardUtils.getSDCardDir() + Constants.PATH_BASE;
-
-        FileUtils.createdirectory(dcimPath);
-        FileUtils.createdirectory(basePath);
     }
 
     @Override
@@ -85,6 +79,11 @@ public class MainActivity extends BaseActivity {
     private void setData() {
         btnTripleSend.setOnClickListener(mClick);
         btnSecret.setOnClickListener(mClick);
+
+        final String basePath = SDCardUtils.getSDCardDir() + Constants.PATH_BASE;
+        if (!FileUtils.createdirectory(basePath)) {
+            showSnackbar("创建存储目录失败");
+        }
     }
 
     @Override

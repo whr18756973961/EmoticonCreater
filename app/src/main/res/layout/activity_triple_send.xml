@@ -44,7 +44,7 @@
                 android:layout_height="100dp"
                 android:layout_alignStart="@+id/et_title"
                 android:layout_below="@+id/et_title"
-                android:background="@drawable/ic_add_picture"
+                android:src="@drawable/ic_add_picture"
                 android:scaleType="centerCrop" />
 
             <ImageView
@@ -55,7 +55,7 @@
                 android:layout_marginEnd="10dp"
                 android:layout_marginStart="10dp"
                 android:layout_toEndOf="@+id/iv_picture1"
-                android:background="@drawable/ic_add_picture"
+                android:src="@drawable/ic_add_picture"
                 android:scaleType="centerCrop" />
 
             <ImageView
@@ -64,7 +64,7 @@
                 android:layout_height="100dp"
                 android:layout_below="@+id/et_title"
                 android:layout_toEndOf="@+id/iv_picture2"
-                android:background="@drawable/ic_add_picture"
+                android:src="@drawable/ic_add_picture"
                 android:scaleType="centerCrop" />
 
             <EditText
@@ -136,10 +136,8 @@
 
         <ImageView
             android:id="@+id/iv_preview"
-            android:layout_width="match_parent"
+            android:layout_width="340dp"
             android:layout_height="150dp"
-            android:layout_marginEnd="20dp"
-            android:layout_marginStart="20dp"
             android:layout_marginTop="10dp"
             android:background="@color/white"
             android:scaleType="fitCenter" />

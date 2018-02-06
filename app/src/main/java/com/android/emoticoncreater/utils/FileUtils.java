@@ -15,10 +15,12 @@ import java.io.OutputStream;
  */
 public class FileUtils {
 
-    public static void createdirectory(String path) {
+    public static boolean createdirectory(String path) {
         final File file = new File(path);
         if (!file.exists()) {
-            file.mkdir();
+            return file.mkdirs();
+        } else {
+            return true;
         }
     }
 
