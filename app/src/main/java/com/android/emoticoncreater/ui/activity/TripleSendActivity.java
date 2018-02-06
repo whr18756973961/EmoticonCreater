@@ -17,10 +17,10 @@ import com.android.emoticoncreater.config.Constants;
 import com.android.emoticoncreater.db.LiteOrmHelper;
 import com.android.emoticoncreater.model.ThreeProverbBean;
 import com.android.emoticoncreater.utils.DataCleanManager;
-import com.android.emoticoncreater.utils.EmotionCreateUtils;
 import com.android.emoticoncreater.utils.FileUtils;
 import com.android.emoticoncreater.utils.SDCardUtils;
 import com.android.emoticoncreater.utils.ThreadPoolUtil;
+import com.android.emoticoncreater.utils.TripleSendUtils;
 import com.android.emoticoncreater.widget.imageloader.ImageLoaderFactory;
 import com.luck.picture.lib.PictureSelector;
 import com.luck.picture.lib.config.PictureConfig;
@@ -230,7 +230,7 @@ public class TripleSendActivity extends BaseActivity {
                 public void run() {
                     copyUsedPicture();
 
-                    mCurrentImage = EmotionCreateUtils.createExpression(title, mPath1, mPath2, mPath3, name1, name2, name3, mSavePath);
+                    mCurrentImage = TripleSendUtils.createExpression(title, mPath1, mPath2, mPath3, name1, name2, name3, mSavePath);
 
                     doStatistics(title, name1, name2, name3);
 

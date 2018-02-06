@@ -11,10 +11,10 @@ import android.graphics.RectF;
 import java.io.File;
 
 /**
- * 图片旋转处理工具类
+ * 表情三连发工具类
  */
 
-public class EmotionCreateUtils {
+public class TripleSendUtils {
 
     private static final int backgroundWidth = 640;
     private static final int backgroundHeight = 300;
