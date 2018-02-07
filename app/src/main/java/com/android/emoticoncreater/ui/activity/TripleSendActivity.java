@@ -1,8 +1,10 @@
 package com.android.emoticoncreater.ui.activity;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -22,13 +24,8 @@ import com.android.emoticoncreater.utils.SDCardUtils;
 import com.android.emoticoncreater.utils.ThreadPoolUtil;
 import com.android.emoticoncreater.utils.TripleSendUtils;
 import com.android.emoticoncreater.widget.imageloader.ImageLoaderFactory;
-import com.luck.picture.lib.PictureSelector;
-import com.luck.picture.lib.config.PictureConfig;
-import com.luck.picture.lib.config.PictureMimeType;
-import com.luck.picture.lib.entity.LocalMedia;
 
 import java.io.File;
-import java.util.List;
 
 /**
  * 表情三连发
@@ -36,9 +33,12 @@ import java.util.List;
 
 public class TripleSendActivity extends BaseActivity {
 
-    private static final int REQUEST_CODE_PICTURE1 = 1001;
-    private static final int REQUEST_CODE_PICTURE2 = 1002;
-    private static final int REQUEST_CODE_PICTURE3 = 1003;
+    private static final int REQUEST_CODE_PICTURE1 = 1;
+    private static final int REQUEST_CODE_PICTURE2 = 1 << 1;
+    private static final int REQUEST_CODE_PICTURE3 = 1 << 2;
+    private static final int REQUEST_CODE_SELECT_PICTURE = 1 << 4;
+    private static final int REQUEST_CODE_CUTE_PICTURE = 1 << 5;
+
     private static final int REQUEST_CODE_TO_PROVERB = 1004;
 
     private EditText etTitle;
@@ -58,7 +58,7 @@ public class TripleSendActivity extends BaseActivity {
     private String mPath3;
     private String mSavePath;
     private String mTempPath;
-    private String mUsedPath;
+    private File mCutePhotoFile;
     private File mCurrentImage;
     private LiteOrmHelper mDBHelper;
 
@@ -72,11 +72,9 @@ public class TripleSendActivity extends BaseActivity {
         super.initData();
         mSavePath = SDCardUtils.getSDCardDir() + Constants.PATH_TRIPLE_SEND;
         mTempPath = SDCardUtils.getExternalCacheDir(this);
-        mUsedPath = SDCardUtils.getSDCardDir() + Constants.PATH_USED_PICTURE;
 
         FileUtils.createdirectory(mSavePath);
         FileUtils.createdirectory(mTempPath);
-        FileUtils.createdirectory(mUsedPath);
 
         mDBHelper = new LiteOrmHelper(this);
     }
@@ -87,17 +85,17 @@ public class TripleSendActivity extends BaseActivity {
         setToolbarBackEnable();
         setToolbarTitle("表情三连发");
 
-        etTitle = (EditText) findViewById(R.id.et_title);
-        ivPicture1 = (ImageView) findViewById(R.id.iv_picture1);
-        ivPicture2 = (ImageView) findViewById(R.id.iv_picture2);
-        ivPicture3 = (ImageView) findViewById(R.id.iv_picture3);
-        etName1 = (EditText) findViewById(R.id.et_name1);
-        etName2 = (EditText) findViewById(R.id.et_name2);
-        etName3 = (EditText) findViewById(R.id.et_name3);
-        btnDoCreate = (Button) findViewById(R.id.btn_do_create);
-        ivPreview = (ImageView) findViewById(R.id.iv_preview);
-        btnDoSave = (Button) findViewById(R.id.btn_do_save);
-        btnDoSend = (Button) findViewById(R.id.btn_do_send);
+        etTitle = findViewById(R.id.et_title);
+        ivPicture1 = findViewById(R.id.iv_picture1);
+        ivPicture2 = findViewById(R.id.iv_picture2);
+        ivPicture3 = findViewById(R.id.iv_picture3);
+        etName1 = findViewById(R.id.et_name1);
+        etName2 = findViewById(R.id.et_name2);
+        etName3 = findViewById(R.id.et_name3);
+        btnDoCreate = findViewById(R.id.btn_do_create);
+        ivPreview = findViewById(R.id.iv_preview);
+        btnDoSave = findViewById(R.id.btn_do_save);
+        btnDoSend = findViewById(R.id.btn_do_send);
 
         ivPicture1.setOnClickListener(mClick);
         ivPicture2.setOnClickListener(mClick);
@@ -132,24 +130,28 @@ public class TripleSendActivity extends BaseActivity {
                     etName3.setText(proverb.getThirdProverb());
                 }
             } else {
-                final List<LocalMedia> selectList = PictureSelector.obtainMultipleResult(data);
-                if (selectList != null && selectList.size() > 0) {
-                    final LocalMedia media = selectList.get(0);
-                    final String path = media.getPath();
-                    final String compressPath = media.getCompressPath();
-                    if (REQUEST_CODE_PICTURE1 == requestCode) {
-                        mPath1 = path.contains(mUsedPath) ? path : compressPath;
-                        ImageLoaderFactory.getLoader().loadImage(TripleSendActivity.this, ivPicture1, mPath1);
-                        mPath2 = mPath1;
-                        ImageLoaderFactory.getLoader().loadImage(TripleSendActivity.this, ivPicture2, mPath2);
-                        mPath3 = mPath1;
-                        ImageLoaderFactory.getLoader().loadImage(TripleSendActivity.this, ivPicture3, mPath3);
-                    } else if (REQUEST_CODE_PICTURE2 == requestCode) {
-                        mPath2 = path.contains(mUsedPath) ? path : compressPath;
-                        ImageLoaderFactory.getLoader().loadImage(TripleSendActivity.this, ivPicture2, mPath2);
-                    } else {
-                        mPath3 = path.contains(mUsedPath) ? path : compressPath;
-                        ImageLoaderFactory.getLoader().loadImage(TripleSendActivity.this, ivPicture3, mPath3);
+                final int actionCode = getActionCode(requestCode);
+                final int pictureCode = getPictureCode(requestCode);
+                if (actionCode == REQUEST_CODE_SELECT_PICTURE) {
+                    if (data != null) {
+                        doCutPicture(data.getData(), pictureCode);
+                    }
+                } else if (actionCode == REQUEST_CODE_CUTE_PICTURE) {
+                    if (mCutePhotoFile != null && mCutePhotoFile.exists()) {
+                        if (REQUEST_CODE_PICTURE1 == pictureCode) {
+                            mPath1 = mCutePhotoFile.getAbsolutePath();
+                            ImageLoaderFactory.getLoader().loadImage(TripleSendActivity.this, ivPicture1, mPath1);
+                            mPath2 = mPath1;
+                            ImageLoaderFactory.getLoader().loadImage(TripleSendActivity.this, ivPicture2, mPath2);
+                            mPath3 = mPath1;
+                            ImageLoaderFactory.getLoader().loadImage(TripleSendActivity.this, ivPicture3, mPath3);
+                        } else if (REQUEST_CODE_PICTURE2 == pictureCode) {
+                            mPath2 = mCutePhotoFile.getAbsolutePath();
+                            ImageLoaderFactory.getLoader().loadImage(TripleSendActivity.this, ivPicture2, mPath2);
+                        } else {
+                            mPath3 = mCutePhotoFile.getAbsolutePath();
+                            ImageLoaderFactory.getLoader().loadImage(TripleSendActivity.this, ivPicture3, mPath3);
+                        }
                     }
                 }
             }
@@ -175,33 +177,29 @@ public class TripleSendActivity extends BaseActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    private void selectPicture(int requestCode) {
-        PictureSelector.create(this)
-                .openGallery(PictureMimeType.ofImage())
-                .imageSpanCount(3)
-                .selectionMode(PictureConfig.SINGLE)
-                .previewImage(false)
-                .isCamera(false)
-                .imageFormat(PictureMimeType.JPEG)
-                .isZoomAnim(false)
-                .glideOverride(200, 200)
-                .enableCrop(true)
-                .compress(true)
-                .withAspectRatio(1, 1)
-                .hideBottomControls(false)
-                .isGif(false)
-                .compressSavePath(mTempPath)
-                .minimumCompressSize(100)
-                .freeStyleCropEnabled(false)
-                .circleDimmedLayer(false)
-                .showCropFrame(true)
-                .showCropGrid(false)
-                .cropCompressQuality(90)
-                .minimumCompressSize(100)
-                .cropWH(200, 200)
-                .rotateEnabled(false)
-                .scaleEnabled(true)
-                .forResult(requestCode);
+    private void doSelectPicture(int requestCode) {
+        Intent pickIntent = new Intent(Intent.ACTION_PICK);
+        pickIntent.setDataAndType(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, "image/*");
+        startActivityForResult(pickIntent, requestCode | REQUEST_CODE_SELECT_PICTURE);
+    }
+
+    private void doCutPicture(Uri uri, int requestCode) {
+        mCutePhotoFile = new File(mTempPath, System.currentTimeMillis() + ".jpg");
+        final Uri outputUri = Uri.fromFile(mCutePhotoFile);
+
+        Intent intent = new Intent("com.android.camera.action.CROP");
+        intent.setDataAndType(uri, "image/*");
+        intent.putExtra("crop", "true");
+        intent.putExtra("aspectX", 1);
+        intent.putExtra("aspectY", 1);
+        intent.putExtra("outputX", 200);
+        intent.putExtra("outputY", 200);
+        intent.putExtra("scale", true);
+        intent.putExtra("return-data", false);
+        intent.putExtra(MediaStore.EXTRA_OUTPUT, outputUri);
+        intent.putExtra("outputFormat", Bitmap.CompressFormat.JPEG.toString());
+        intent.putExtra("noFaceDetection", true);
+        startActivityForResult(intent, requestCode | REQUEST_CODE_CUTE_PICTURE);
     }
 
     private void doCreatePicture() {
@@ -228,8 +226,6 @@ public class TripleSendActivity extends BaseActivity {
             ThreadPoolUtil.getInstache().cachedExecute(new Runnable() {
                 @Override
                 public void run() {
-                    copyUsedPicture();
-
                     mCurrentImage = TripleSendUtils.createExpression(title, mPath1, mPath2, mPath3, name1, name2, name3, mSavePath);
 
                     doStatistics(title, name1, name2, name3);
@@ -252,18 +248,6 @@ public class TripleSendActivity extends BaseActivity {
                     });
                 }
             });
-        }
-    }
-
-    private void copyUsedPicture() {
-        if (!TextUtils.isEmpty(mPath1) && !mPath1.contains(mUsedPath)) {
-            refreshAlbum(FileUtils.copyFile(mPath1, mUsedPath));
-        }
-        if (!TextUtils.isEmpty(mPath2) && !mPath2.equals(mPath1) && !mPath2.contains(mUsedPath)) {
-            refreshAlbum(FileUtils.copyFile(mPath2, mUsedPath));
-        }
-        if (!TextUtils.isEmpty(mPath3) && !mPath3.equals(mPath1) && !mPath3.contains(mUsedPath)) {
-            refreshAlbum(FileUtils.copyFile(mPath3, mUsedPath));
         }
     }
 
@@ -331,19 +315,41 @@ public class TripleSendActivity extends BaseActivity {
         }
     }
 
+    private int getPictureCode(int code) {
+        if ((REQUEST_CODE_PICTURE1 & code) != 0) {
+            return REQUEST_CODE_PICTURE1;
+        } else if ((REQUEST_CODE_PICTURE2 & code) != 0) {
+            return REQUEST_CODE_PICTURE2;
+        } else if ((REQUEST_CODE_PICTURE3 & code) != 0) {
+            return REQUEST_CODE_PICTURE3;
+        }
+
+        return -1;
+    }
+
+    private int getActionCode(int code) {
+        if ((REQUEST_CODE_SELECT_PICTURE & code) != 0) {
+            return REQUEST_CODE_SELECT_PICTURE;
+        } else if ((REQUEST_CODE_CUTE_PICTURE & code) != 0) {
+            return REQUEST_CODE_CUTE_PICTURE;
+        }
+
+        return -1;
+    }
+
     private View.OnClickListener mClick = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
             hideKeyboard();
             switch (v.getId()) {
                 case R.id.iv_picture1:
-                    selectPicture(REQUEST_CODE_PICTURE1);
+                    doSelectPicture(REQUEST_CODE_PICTURE1);
                     break;
                 case R.id.iv_picture2:
-                    selectPicture(REQUEST_CODE_PICTURE2);
+                    doSelectPicture(REQUEST_CODE_PICTURE2);
                     break;
                 case R.id.iv_picture3:
-                    selectPicture(REQUEST_CODE_PICTURE3);
+                    doSelectPicture(REQUEST_CODE_PICTURE3);
                     break;
                 case R.id.btn_do_create:
                     doCreatePicture();

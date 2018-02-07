@@ -55,7 +55,7 @@ public class ThreeProverbListActivity extends BaseActivity {
         setToolbarBackEnable();
         setToolbarTitle("怼人语录");
 
-        rvProverbList = (RecyclerView) findViewById(R.id.rv_proverb_list);
+        rvProverbList = findViewById(R.id.rv_proverb_list);
         rvProverbList.setLayoutManager(new GridLayoutManager(this, 2));
         rvProverbList.setAdapter(mProverbAdapter);
 

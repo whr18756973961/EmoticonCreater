@@ -54,8 +54,8 @@ public class SecretEditActivity extends BaseActivity {
         setToolbarTitle("添加秘密");
         setToolbarSubTitle("编写你的秘密");
 
-        ivPicture = (ImageView) findViewById(R.id.iv_picture);
-        etTitle = (EditText) findViewById(R.id.et_title);
+        ivPicture = findViewById(R.id.iv_picture);
+        etTitle = findViewById(R.id.et_title);
 
         if (mSecret != null) {
             final int resourceId = mSecret.getResourceId();

@@ -78,8 +78,8 @@ public class TellTheSecretActivity extends BaseActivity {
         setToolbarBackEnable();
         setToolbarTitle("告诉你个秘密");
 
-        rvSecretList = (RecyclerView) findViewById(R.id.rv_secret_list);
-        btnAdd = (FloatingActionButton) findViewById(R.id.btn_add);
+        rvSecretList = findViewById(R.id.rv_secret_list);
+        btnAdd = findViewById(R.id.btn_add);
 
         rvSecretList.setLayoutManager(mLayoutManager);
         rvSecretList.setAdapter(mSecretAdapter);

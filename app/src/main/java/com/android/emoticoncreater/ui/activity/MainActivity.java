@@ -70,8 +70,8 @@ public class MainActivity extends BaseActivity {
         super.initView(savedInstanceState);
         setToolbarTitle(R.string.app_name);
 
-        btnTripleSend = (Button) findViewById(R.id.btn_triple_send);
-        btnSecret = (Button) findViewById(R.id.btn_secret);
+        btnTripleSend = findViewById(R.id.btn_triple_send);
+        btnSecret = findViewById(R.id.btn_secret);
 
         requestPermission();
     }
