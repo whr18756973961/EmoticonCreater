@@ -3,7 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/rootview"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="#FAFAFA">
 
     <include layout="@layout/layout_appbar" />
 
@@ -15,16 +16,16 @@
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
         <RelativeLayout
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginEnd="10dp"
+            android:layout_marginStart="10dp"
             android:layout_marginTop="20dp"
-            android:background="@color/white"
-            android:paddingEnd="10dp"
-            android:paddingStart="10dp">
+            android:background="@color/white">
 
             <EditText
                 android:id="@+id/et_title"
-                android:layout_width="320dp"
+                android:layout_width="match_parent"
                 android:layout_height="30dp"
                 android:layout_centerHorizontal="true"
                 android:background="@null"
@@ -40,32 +41,32 @@
 
             <ImageView
                 android:id="@+id/iv_picture1"
-                android:layout_width="100dp"
-                android:layout_height="100dp"
-                android:layout_alignStart="@+id/et_title"
+                android:layout_width="96dp"
+                android:layout_height="96dp"
                 android:layout_below="@+id/et_title"
-                android:src="@drawable/ic_add_picture"
-                android:scaleType="centerCrop" />
+                android:layout_toStartOf="@+id/iv_picture2"
+                android:scaleType="centerCrop"
+                android:src="@drawable/ic_add_picture" />
 
             <ImageView
                 android:id="@+id/iv_picture2"
-                android:layout_width="100dp"
-                android:layout_height="100dp"
+                android:layout_width="96dp"
+                android:layout_height="96dp"
                 android:layout_below="@+id/et_title"
+                android:layout_centerHorizontal="true"
                 android:layout_marginEnd="10dp"
                 android:layout_marginStart="10dp"
-                android:layout_toEndOf="@+id/iv_picture1"
-                android:src="@drawable/ic_add_picture"
-                android:scaleType="centerCrop" />
+                android:scaleType="centerCrop"
+                android:src="@drawable/ic_add_picture" />
 
             <ImageView
                 android:id="@+id/iv_picture3"
-                android:layout_width="100dp"
-                android:layout_height="100dp"
+                android:layout_width="96dp"
+                android:layout_height="96dp"
                 android:layout_below="@+id/et_title"
                 android:layout_toEndOf="@+id/iv_picture2"
-                android:src="@drawable/ic_add_picture"
-                android:scaleType="centerCrop" />
+                android:scaleType="centerCrop"
+                android:src="@drawable/ic_add_picture" />
 
             <EditText
                 android:id="@+id/et_name1"
@@ -136,9 +137,10 @@
 
         <ImageView
             android:id="@+id/iv_preview"
-            android:layout_width="340dp"
+            android:layout_width="match_parent"
             android:layout_height="150dp"
-            android:layout_marginTop="10dp"
+            android:layout_marginEnd="20dp"
+            android:layout_marginStart="20dp"
             android:background="@color/white"
             android:scaleType="fitCenter" />
 

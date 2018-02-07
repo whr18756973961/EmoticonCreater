@@ -20,7 +20,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:lines="2"
-            android:textColor="@color/black_90"
+            android:textColor="@color/color_101010"
             android:textSize="16sp"
             tools:text="标题" />
 
@@ -28,7 +28,7 @@
             android:id="@+id/tv_first"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textColor="@color/black_90"
+            android:textColor="@color/color_101010"
             android:textSize="14sp"
             tools:text="标题" />
 
@@ -36,7 +36,7 @@
             android:id="@+id/tv_second"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textColor="@color/black_90"
+            android:textColor="@color/color_101010"
             android:textSize="14sp"
             tools:text="标题" />
 
@@ -44,14 +44,14 @@
             android:id="@+id/tv_third"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textColor="@color/black_90"
+            android:textColor="@color/color_101010"
             android:textSize="14sp"
             tools:text="标题" />
 
         <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:background="@color/color_F1F1F1" />
+            android:background="@color/color_FAFAFA" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -63,7 +63,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:textColor="@color/black_90"
+                android:textColor="@color/color_101010"
                 android:textSize="14sp"
                 tools:text="使用次数：100" />
 
@@ -75,7 +75,7 @@
                 android:paddingEnd="10dp"
                 android:paddingStart="10dp"
                 android:text="删除"
-                android:textColor="@color/black_90"
+                android:textColor="@color/color_101010"
                 android:textSize="14sp" />
 
         </LinearLayout>
