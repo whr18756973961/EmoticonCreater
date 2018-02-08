@@ -20,6 +20,7 @@ import com.android.emoticoncreater.db.LiteOrmHelper;
 import com.android.emoticoncreater.model.ThreeProverbBean;
 import com.android.emoticoncreater.utils.DataCleanManager;
 import com.android.emoticoncreater.utils.FileUtils;
+import com.android.emoticoncreater.utils.ImageUtils;
 import com.android.emoticoncreater.utils.SDCardUtils;
 import com.android.emoticoncreater.utils.ThreadPoolUtil;
 import com.android.emoticoncreater.utils.TripleSendUtils;
@@ -70,7 +71,7 @@ public class TripleSendActivity extends BaseActivity {
     @Override
     protected void initData() {
         super.initData();
-        mSavePath = SDCardUtils.getSDCardDir() + Constants.PATH_TRIPLE_SEND;
+        mSavePath = SDCardUtils.getSDCardDir(this) + Constants.PATH_TRIPLE_SEND;
         mTempPath = SDCardUtils.getExternalCacheDir(this);
 
         FileUtils.createdirectory(mSavePath);
@@ -302,7 +303,7 @@ public class TripleSendActivity extends BaseActivity {
 
     private void doSend() {
         if (mCurrentImage != null && mCurrentImage.exists() && mCurrentImage.isFile()) {
-            final Uri uri = Uri.fromFile(mCurrentImage);
+            final Uri uri = ImageUtils.getUriFromFile(this, mCurrentImage);
 
             Intent intent = new Intent(Intent.ACTION_SEND);
             intent.setType("image/jpg");

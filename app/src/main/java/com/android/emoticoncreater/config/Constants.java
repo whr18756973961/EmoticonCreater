@@ -8,8 +8,7 @@ import java.io.File;
 
 public class Constants {
 
-    private static final String PATH_DCIM = File.separator + "DCIM" + File.separator;
-    public static final String PATH_BASE = PATH_DCIM + "表情包生成器" + File.separator;
+    public static final String PATH_BASE = File.separator + "表情包生成器" + File.separator;
     public static final String PATH_TRIPLE_SEND = PATH_BASE + "表情三连发" + File.separator;
     public static final String PATH_SECRET = PATH_BASE + "告诉你个秘密" + File.separator;
 

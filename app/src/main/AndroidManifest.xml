@@ -20,8 +20,8 @@
         android:theme="@style/AppTheme">
 
         <provider
-            android:name=".utils.PhotoFileProvider"
-            android:authorities="com.android.emoticoncreater.myprovider"
+            android:name="android.support.v4.content.FileProvider"
+            android:authorities="com.android.emoticoncreater.fileProvider"
             android:exported="false"
             android:grantUriPermissions="true">
             <meta-data

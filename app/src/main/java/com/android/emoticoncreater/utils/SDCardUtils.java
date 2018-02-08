@@ -12,9 +12,18 @@ import java.io.File;
  */
 public class SDCardUtils {
 
+    public static String getSDCardPublicDir(String type) {
+        return Environment
+                .getExternalStoragePublicDirectory(type)
+                .getAbsolutePath();
+    }
+
     //  /storage/emulated/0
-    public static String getSDCardDir() {
-        return Environment.getExternalStorageDirectory().getPath();
+    public static String getSDCardDir(Context context) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            return getExternalFilesDir(context);
+        }
+        return getSDCardPublicDir(Environment.DIRECTORY_DCIM);
     }
 
     //  /data/data/<application package>/cache
@@ -75,17 +84,17 @@ public class SDCardUtils {
     }
 
     //获取内部存储剩余空间
-    public static long getFreeSpace(){
+    public static long getFreeSpace() {
         return Environment.getExternalStorageDirectory().getFreeSpace();
     }
 
     //获取内部存储可用空间
-    public static long getUsableSpace(){
+    public static long getUsableSpace() {
         return Environment.getExternalStorageDirectory().getUsableSpace();
     }
 
     //获取内部存储总空间
-    public static long getTotalSpace(){
+    public static long getTotalSpace() {
         return Environment.getExternalStorageDirectory().getTotalSpace();
     }
 

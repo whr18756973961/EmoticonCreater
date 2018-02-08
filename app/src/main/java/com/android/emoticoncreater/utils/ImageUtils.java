@@ -5,7 +5,9 @@ import android.content.Context;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.net.Uri;
+import android.os.Build;
 import android.provider.MediaStore;
+import android.support.v4.content.FileProvider;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -31,6 +33,16 @@ public class ImageUtils {
             e.printStackTrace();
         }
         return file;
+    }
+
+    public static Uri getUriFromFile(Context context, File file) {
+        final Uri uri;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            uri = FileProvider.getUriForFile(context, "com.android.emoticoncreater.fileProvider", file);
+        } else {
+            uri = Uri.fromFile(file);
+        }
+        return uri;
     }
 
     public static Uri getImageContentUri(Context context, File imageFile) {

@@ -80,10 +80,11 @@ public class MainActivity extends BaseActivity {
         btnTripleSend.setOnClickListener(mClick);
         btnSecret.setOnClickListener(mClick);
 
-        final String basePath = SDCardUtils.getSDCardDir() + Constants.PATH_BASE;
+        final String basePath = SDCardUtils.getSDCardDir(this) + Constants.PATH_BASE;
         if (!FileUtils.createdirectory(basePath)) {
             showSnackbar("创建存储目录失败");
         }
+
     }
 
     @Override

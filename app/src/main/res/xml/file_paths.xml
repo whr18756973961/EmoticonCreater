@@ -1,17 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <paths>
-        <files-path
-            name="images"
-            path="表情包生成器" />
+        <external-path
+            name="files_root"
+            path="Android/data/com.android.emoticoncreater/" />
 
         <external-path
-            name="external_images"
-            path="DCIM/表情包生成器" />
-
-        <external-path
-            name="external_cache_images"
-            path="DCIM/表情包生成器/Cache" />
-
+            name="external_storage_root"
+            path="." />
     </paths>
 </resources>

@@ -60,7 +60,7 @@ public class TellTheSecretActivity extends BaseActivity {
     @Override
     protected void initData() {
         super.initData();
-        mSavePath = SDCardUtils.getSDCardDir() + Constants.PATH_SECRET;
+        mSavePath = SDCardUtils.getSDCardDir(this) + Constants.PATH_SECRET;
 
         FileUtils.createdirectory(mSavePath);
 

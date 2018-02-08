@@ -11,6 +11,7 @@ import android.widget.ImageView;
 
 import com.android.emoticoncreater.R;
 import com.android.emoticoncreater.app.BaseActivity;
+import com.android.emoticoncreater.utils.ImageUtils;
 import com.android.emoticoncreater.widget.imageloader.ImageLoaderFactory;
 
 import java.io.File;
@@ -71,7 +72,7 @@ public class ShowSecretActivity extends BaseActivity {
 
     private void doSend() {
         if (mPictureFile != null && mPictureFile.exists() && mPictureFile.isFile()) {
-            final Uri uri = Uri.fromFile(mPictureFile);
+            final Uri uri = ImageUtils.getUriFromFile(this, mPictureFile);
 
             Intent intent = new Intent(Intent.ACTION_SEND);
             intent.setType("image/jpg");
