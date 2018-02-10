@@ -36,7 +36,7 @@ android {
                 def buildType = buildType.name
                 def version = defaultConfig.versionName
                 def build = defaultConfig.versionCode
-                outputFileName = appName + version + "_build" + build + "_" + buildType + ".apk"
+                outputFileName = appName + version + "_" + build + "_" + buildType + ".apk"
             }
         }
     }
