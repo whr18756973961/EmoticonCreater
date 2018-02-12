@@ -5,10 +5,12 @@ import android.app.ActivityOptions;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.android.emoticoncreater.R;
 import com.android.emoticoncreater.app.BaseActivity;
@@ -56,6 +58,13 @@ public class SecretEditActivity extends BaseActivity {
 
         ivPicture = findViewById(R.id.iv_picture);
         etTitle = findViewById(R.id.et_title);
+
+        etTitle.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                return event.getKeyCode() == KeyEvent.KEYCODE_ENTER;
+            }
+        });
 
         if (mSecret != null) {
             final int resourceId = mSecret.getResourceId();

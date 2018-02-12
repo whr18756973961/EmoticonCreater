@@ -29,9 +29,9 @@ public class SecretPictureListAdapter extends RecyclerView.Adapter {
         mInflater = LayoutInflater.from(context);
 
         final int[] resourceIds = {
-                R.drawable.img_1, R.drawable.img_2, R.drawable.img_3,
-                R.drawable.img_4, R.drawable.img_5, R.drawable.img_6,
-                R.drawable.img_7, R.drawable.img_8, R.drawable.img_9, R.drawable.img_10
+                R.raw.img_1, R.raw.img_2, R.raw.img_3,
+                R.raw.img_4, R.raw.img_5, R.raw.img_6,
+                R.raw.img_7, R.raw.img_8, R.raw.img_9, R.raw.img_10
         };
         final String[] titles = {
                 "福尔泰 + 乌蝇哥", "教皇 + 乌蝇哥", "金馆长 + 乌蝇哥",
