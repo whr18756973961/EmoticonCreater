@@ -11,7 +11,7 @@ import android.view.View;
 
 import com.android.emoticoncreater.R;
 import com.android.emoticoncreater.app.BaseActivity;
-import com.android.emoticoncreater.model.SecretBean;
+import com.android.emoticoncreater.model.PictureBean;
 import com.android.emoticoncreater.ui.adapter.OnListClickListener;
 import com.android.emoticoncreater.ui.adapter.SecretPictureListAdapter;
 
@@ -52,7 +52,7 @@ public class SecretListActivity extends BaseActivity {
         setToolbarTitle("秘密表情包");
         setToolbarSubTitle("选择一个秘密表情");
 
-        rvSecretList = findViewById(R.id.rv_secret_list);
+        rvSecretList = (RecyclerView) findViewById(R.id.rv_secret_list);
         rvSecretList.setLayoutManager(new LinearLayoutManager(this));
         rvSecretList.setAdapter(mSecretAdapter);
 
@@ -61,8 +61,8 @@ public class SecretListActivity extends BaseActivity {
     private OnListClickListener mListClick = new OnListClickListener() {
         @Override
         public void onItemClick(View view, Object object) {
-            if (object instanceof SecretBean) {
-                final SecretBean secret = (SecretBean) object;
+            if (object instanceof PictureBean) {
+                final PictureBean secret = (PictureBean) object;
                 Pair<View, String> picturePair = Pair.create(view, getString(R.string.transition_name_secret));
 
                 ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation(SecretListActivity.this, picturePair);

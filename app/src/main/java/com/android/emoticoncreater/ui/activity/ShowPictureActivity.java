@@ -17,10 +17,10 @@ import com.android.emoticoncreater.widget.imageloader.ImageLoaderFactory;
 import java.io.File;
 
 /**
- * 展示生成的秘密图片
+ * 展示生成的图片
  */
 
-public class ShowSecretActivity extends BaseActivity {
+public class ShowPictureActivity extends BaseActivity {
 
     private static final String KEY_PICTURE_FILE_PATH = "key_picture_file_path";
 
@@ -31,14 +31,14 @@ public class ShowSecretActivity extends BaseActivity {
 
     public static void show(Activity activity, String filePath) {
         Intent intent = new Intent();
-        intent.setClass(activity, ShowSecretActivity.class);
+        intent.setClass(activity, ShowPictureActivity.class);
         intent.putExtra(KEY_PICTURE_FILE_PATH, filePath);
         activity.startActivity(intent);
     }
 
     @Override
     protected int getContentView() {
-        return R.layout.activity_show_secret;
+        return R.layout.activity_show_picture;
     }
 
     @Override
@@ -55,10 +55,10 @@ public class ShowSecretActivity extends BaseActivity {
         super.initView(savedInstanceState);
 
         setToolbarBackEnable();
-        setToolbarTitle("我的秘密");
+        setToolbarTitle("图片预览");
 
-        ivPicture = findViewById(R.id.iv_picture);
-        btnSend = findViewById(R.id.btn_send);
+        ivPicture = (ImageView) findViewById(R.id.iv_picture);
+        btnSend = (FloatingActionButton) findViewById(R.id.btn_send);
 
         if (mPictureFile != null && mPictureFile.exists()) {
             ImageLoaderFactory.getLoader().loadImageFitCenter(this, ivPicture, mPictureFile, 0, 0);

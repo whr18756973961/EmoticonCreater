@@ -9,7 +9,7 @@ import android.graphics.Paint;
 import android.graphics.Rect;
 import android.graphics.RectF;
 
-import com.android.emoticoncreater.model.SecretBean;
+import com.android.emoticoncreater.model.PictureBean;
 
 import java.io.File;
 import java.util.List;
@@ -27,7 +27,7 @@ public class SecretUtils {
     private static final int backgroundColor = 0xffffffff;
     private static final int textColor = 0xff010101;
 
-    public static File createSecret(Resources resources, final List<SecretBean> secretList, final String savePath) {
+    public static File createSecret(Resources resources, final List<PictureBean> secretList, final String savePath) {
         final Paint paint = new Paint();
         paint.reset();
         paint.setColor(textColor);
@@ -36,7 +36,7 @@ public class SecretUtils {
 
         final int totalWidth = padding + pictureWidth + padding;
         int totalHeight = 0;
-        for (SecretBean secret : secretList) {
+        for (PictureBean secret : secretList) {
             totalHeight += padding;
             totalHeight += pictureHeight;
             totalHeight += padding;
@@ -60,7 +60,7 @@ public class SecretUtils {
         paint.setFlags(Paint.FAKE_BOLD_TEXT_FLAG | Paint.ANTI_ALIAS_FLAG);
 
         totalHeight = 0;
-        for (SecretBean secret : secretList) {
+        for (PictureBean secret : secretList) {
             final String text = secret.getTitle();
             final int resourceId = secret.getResourceId();
 

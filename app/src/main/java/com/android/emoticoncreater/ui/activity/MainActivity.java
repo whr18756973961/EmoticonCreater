@@ -28,6 +28,7 @@ public class MainActivity extends BaseActivity {
     private static final int REQUEST_TO_SETTING = 1000;//跳转到系统设置权限页面
     private Button btnTripleSend;
     private Button btnSecret;
+    private Button btnOneEmoticon;
 
     private int permissionPosition = 0;//当前请求权限位置
     private String[] permissions;
@@ -70,8 +71,9 @@ public class MainActivity extends BaseActivity {
         super.initView(savedInstanceState);
         setToolbarTitle(R.string.app_name);
 
-        btnTripleSend = findViewById(R.id.btn_triple_send);
-        btnSecret = findViewById(R.id.btn_secret);
+        btnTripleSend = (Button) findViewById(R.id.btn_triple_send);
+        btnSecret = (Button) findViewById(R.id.btn_secret);
+        btnOneEmoticon = (Button) findViewById(R.id.btn_one_emoticon);
 
         requestPermission();
     }
@@ -79,6 +81,7 @@ public class MainActivity extends BaseActivity {
     private void setData() {
         btnTripleSend.setOnClickListener(mClick);
         btnSecret.setOnClickListener(mClick);
+        btnOneEmoticon.setOnClickListener(mClick);
 
         final String basePath = SDCardUtils.getSDCardDir(this) + Constants.PATH_BASE;
         if (!FileUtils.createdirectory(basePath)) {
@@ -162,10 +165,13 @@ public class MainActivity extends BaseActivity {
         public void onClick(View v) {
             switch (v.getId()) {
                 case R.id.btn_triple_send:
-                    startActivity(new Intent(MainActivity.this, TripleSendActivity.class));
+                    TripleSendActivity.show(MainActivity.this);
                     break;
                 case R.id.btn_secret:
                     TellTheSecretActivity.show(MainActivity.this);
+                    break;
+                case R.id.btn_one_emoticon:
+                    OneEmoticonActivity.show(MainActivity.this);
                     break;
             }
         }

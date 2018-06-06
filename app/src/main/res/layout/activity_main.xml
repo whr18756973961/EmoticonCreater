@@ -18,7 +18,9 @@
             android:id="@+id/btn_triple_send"
             android:layout_width="match_parent"
             android:layout_height="40dp"
-            android:layout_margin="20dp"
+            android:layout_marginEnd="20dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="20dp"
             android:background="@drawable/selector_bg_button_green"
             android:gravity="center"
             android:text="表情三连发"
@@ -31,9 +33,23 @@
             android:layout_height="40dp"
             android:layout_marginEnd="20dp"
             android:layout_marginStart="20dp"
+            android:layout_marginTop="20dp"
             android:background="@drawable/selector_bg_button_green"
             android:gravity="center"
             android:text="告诉你个秘密"
+            android:textColor="@color/white"
+            android:textSize="17sp" />
+
+        <Button
+            android:id="@+id/btn_one_emoticon"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_marginEnd="20dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/selector_bg_button_green"
+            android:gravity="center"
+            android:text="一个表情"
             android:textColor="@color/white"
             android:textSize="17sp" />
 

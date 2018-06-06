@@ -6,8 +6,11 @@ import android.os.IBinder;
 import android.support.annotation.LayoutRes;
 import android.support.annotation.Nullable;
 import android.support.annotation.StringRes;
+import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.Snackbar;
+import android.support.design.widget.TabLayout;
+import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
@@ -25,7 +28,9 @@ import com.android.emoticoncreater.ui.dialog.DefaultProgressDialog;
 public abstract class BaseActivity extends AppCompatActivity {
 
     protected CoordinatorLayout mRootView;
+    protected AppBarLayout mAppBarLayout;
     protected Toolbar mToolbar;
+    protected TabLayout mTabLayout;
 
     private InputMethodManager manager;
     private DefaultProgressDialog mProgress;
@@ -65,7 +70,9 @@ public abstract class BaseActivity extends AppCompatActivity {
 
     protected void initView(Bundle savedInstanceState) {
         mRootView = (CoordinatorLayout) findViewById(R.id.rootview);
+        mAppBarLayout = (AppBarLayout) findViewById(R.id.appbarlayout);
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
+        mTabLayout = (TabLayout) findViewById(R.id.tablayout);
         if (mToolbar != null) {
             setSupportActionBar(mToolbar);
         }
@@ -98,6 +105,27 @@ public abstract class BaseActivity extends AppCompatActivity {
     protected void setToolbarBackEnable() {
         if (getSupportActionBar() != null) {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        }
+    }
+
+    protected void setToolbarScrollFlags(@AppBarLayout.LayoutParams.ScrollFlags int flags) {
+        if (mAppBarLayout != null && mAppBarLayout.getChildCount() > 0) {
+            AppBarLayout.LayoutParams mParams = (AppBarLayout.LayoutParams) mAppBarLayout.getChildAt(0).getLayoutParams();
+            mParams.setScrollFlags(flags);
+        }
+    }
+
+    protected void setTabMode(@TabLayout.Mode int mode) {
+        if (mTabLayout != null) {
+            mTabLayout.setVisibility(View.VISIBLE);
+            mTabLayout.setTabMode(mode);
+        }
+    }
+
+    public void setupWithViewPager(@Nullable ViewPager viewPager) {
+        if (mTabLayout != null) {
+            mTabLayout.setVisibility(View.VISIBLE);
+            mTabLayout.setupWithViewPager(viewPager);
         }
     }
 

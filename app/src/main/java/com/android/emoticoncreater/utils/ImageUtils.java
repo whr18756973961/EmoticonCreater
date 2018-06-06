@@ -38,7 +38,7 @@ public class ImageUtils {
     public static Uri getUriFromFile(Context context, File file) {
         final Uri uri;
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-            uri = FileProvider.getUriForFile(context, "com.android.emoticoncreater.fileProvider", file);
+            uri = FileProvider.getUriForFile(context, context.getPackageName() + ".fileProvider", file);
         } else {
             uri = Uri.fromFile(file);
         }
@@ -67,6 +67,19 @@ public class ImageUtils {
             } else {
                 return null;
             }
+        }
+    }
+
+    //根据content://media/external/images/media/***获取真实地址
+    public static String getContentImage(Context context, Uri uri) {
+        String[] proj = {MediaStore.Images.Media.DATA};
+        Cursor cursor = context.getContentResolver().query(uri, proj, null, null, null);
+        if (cursor != null) {
+            int actual_image_column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
+            cursor.moveToFirst();
+            return cursor.getString(actual_image_column_index);
+        } else {
+            return "";
         }
     }
 }

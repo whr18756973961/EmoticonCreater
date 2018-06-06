@@ -1,5 +1,6 @@
 package com.android.emoticoncreater.ui.activity;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
@@ -63,6 +64,12 @@ public class TripleSendActivity extends BaseActivity {
     private File mCurrentImage;
     private LiteOrmHelper mDBHelper;
 
+    public static void show(Activity activity) {
+        Intent intent = new Intent();
+        intent.setClass(activity, TripleSendActivity.class);
+        activity.startActivity(intent);
+    }
+
     @Override
     protected int getContentView() {
         return R.layout.activity_triple_send;
@@ -86,17 +93,17 @@ public class TripleSendActivity extends BaseActivity {
         setToolbarBackEnable();
         setToolbarTitle("表情三连发");
 
-        etTitle = findViewById(R.id.et_title);
-        ivPicture1 = findViewById(R.id.iv_picture1);
-        ivPicture2 = findViewById(R.id.iv_picture2);
-        ivPicture3 = findViewById(R.id.iv_picture3);
-        etName1 = findViewById(R.id.et_name1);
-        etName2 = findViewById(R.id.et_name2);
-        etName3 = findViewById(R.id.et_name3);
-        btnDoCreate = findViewById(R.id.btn_do_create);
-        ivPreview = findViewById(R.id.iv_preview);
-        btnDoSave = findViewById(R.id.btn_do_save);
-        btnDoSend = findViewById(R.id.btn_do_send);
+        etTitle = (EditText) findViewById(R.id.et_title);
+        ivPicture1 = (ImageView) findViewById(R.id.iv_picture1);
+        ivPicture2 = (ImageView) findViewById(R.id.iv_picture2);
+        ivPicture3 = (ImageView) findViewById(R.id.iv_picture3);
+        etName1 = (EditText) findViewById(R.id.et_name1);
+        etName2 = (EditText) findViewById(R.id.et_name2);
+        etName3 = (EditText) findViewById(R.id.et_name3);
+        btnDoCreate = (Button) findViewById(R.id.btn_do_create);
+        ivPreview = (ImageView) findViewById(R.id.iv_preview);
+        btnDoSave = (Button) findViewById(R.id.btn_do_save);
+        btnDoSend = (Button) findViewById(R.id.btn_do_send);
 
         ivPicture1.setOnClickListener(mClick);
         ivPicture2.setOnClickListener(mClick);
@@ -141,17 +148,17 @@ public class TripleSendActivity extends BaseActivity {
                     if (mCutePhotoFile != null && mCutePhotoFile.exists()) {
                         if (REQUEST_CODE_PICTURE1 == pictureCode) {
                             mPath1 = mCutePhotoFile.getAbsolutePath();
-                            ImageLoaderFactory.getLoader().loadImage(TripleSendActivity.this, ivPicture1, mPath1);
                             mPath2 = mPath1;
-                            ImageLoaderFactory.getLoader().loadImage(TripleSendActivity.this, ivPicture2, mPath2);
                             mPath3 = mPath1;
-                            ImageLoaderFactory.getLoader().loadImage(TripleSendActivity.this, ivPicture3, mPath3);
+                            ImageLoaderFactory.getLoader().loadImage(this, ivPicture1, mPath1);
+                            ImageLoaderFactory.getLoader().loadImage(this, ivPicture2, mPath2);
+                            ImageLoaderFactory.getLoader().loadImage(this, ivPicture3, mPath3);
                         } else if (REQUEST_CODE_PICTURE2 == pictureCode) {
                             mPath2 = mCutePhotoFile.getAbsolutePath();
-                            ImageLoaderFactory.getLoader().loadImage(TripleSendActivity.this, ivPicture2, mPath2);
+                            ImageLoaderFactory.getLoader().loadImage(this, ivPicture2, mPath2);
                         } else {
                             mPath3 = mCutePhotoFile.getAbsolutePath();
-                            ImageLoaderFactory.getLoader().loadImage(TripleSendActivity.this, ivPicture3, mPath3);
+                            ImageLoaderFactory.getLoader().loadImage(this, ivPicture3, mPath3);
                         }
                     }
                 }
@@ -171,7 +178,7 @@ public class TripleSendActivity extends BaseActivity {
         int id = item.getItemId();
         if (id == R.id.action_proverb) {
             Intent intent = new Intent();
-            intent.setClass(TripleSendActivity.this, ThreeProverbListActivity.class);
+            intent.setClass(this, ThreeProverbListActivity.class);
             startActivityForResult(intent, REQUEST_CODE_TO_PROVERB);
             return true;
         }
@@ -184,12 +191,19 @@ public class TripleSendActivity extends BaseActivity {
         startActivityForResult(pickIntent, requestCode | REQUEST_CODE_SELECT_PICTURE);
     }
 
-    private void doCutPicture(Uri uri, int requestCode) {
+    private void doCutPicture(Uri inputUri, int requestCode) {
+
+        if (inputUri.toString().contains("file://")) {
+            final String path = inputUri.getPath();
+            final File inputFile = new File(path);
+            inputUri = ImageUtils.getImageContentUri(this, inputFile);
+        }
+
         mCutePhotoFile = new File(mTempPath, System.currentTimeMillis() + ".jpg");
         final Uri outputUri = Uri.fromFile(mCutePhotoFile);
 
         Intent intent = new Intent("com.android.camera.action.CROP");
-        intent.setDataAndType(uri, "image/*");
+        intent.setDataAndType(inputUri, "image/*");
         intent.putExtra("crop", "true");
         intent.putExtra("aspectX", 1);
         intent.putExtra("aspectY", 1);
@@ -227,7 +241,18 @@ public class TripleSendActivity extends BaseActivity {
             ThreadPoolUtil.getInstache().cachedExecute(new Runnable() {
                 @Override
                 public void run() {
-                    mCurrentImage = TripleSendUtils.createExpression(title, mPath1, mPath2, mPath3, name1, name2, name3, mSavePath);
+
+                    TripleSendUtils utils = new TripleSendUtils.Builder()
+                            .setTitle(title)
+                            .setPath1(mPath1)
+                            .setPath2(mPath2)
+                            .setPath3(mPath3)
+                            .setName1(name1)
+                            .setName2(name2)
+                            .setName3(name3)
+                            .setSavePath(mSavePath).bulid();
+
+                    mCurrentImage = utils.createExpression();
 
                     doStatistics(title, name1, name2, name3);
 

@@ -9,7 +9,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.android.emoticoncreater.R;
-import com.android.emoticoncreater.model.SecretBean;
+import com.android.emoticoncreater.model.PictureBean;
 
 import java.util.List;
 
@@ -19,10 +19,10 @@ import java.util.List;
 
 public class SecretListAdapter extends RecyclerView.Adapter {
 
-    private List<SecretBean> mList;
+    private List<PictureBean> mList;
     private LayoutInflater mInflater;
 
-    public SecretListAdapter(Context context, List<SecretBean> list) {
+    public SecretListAdapter(Context context, List<PictureBean> list) {
         mList = list;
         mInflater = LayoutInflater.from(context);
     }
@@ -43,7 +43,7 @@ public class SecretListAdapter extends RecyclerView.Adapter {
     }
 
     private void bindItem(ListViewHolder holder, final int position) {
-        final SecretBean model = mList.get(position);
+        final PictureBean model = mList.get(position);
         final int resourceId = model.getResourceId();
         final String title = model.getTitle();
 

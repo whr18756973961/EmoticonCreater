@@ -17,7 +17,7 @@ import android.view.View;
 import com.android.emoticoncreater.R;
 import com.android.emoticoncreater.app.BaseActivity;
 import com.android.emoticoncreater.config.Constants;
-import com.android.emoticoncreater.model.SecretBean;
+import com.android.emoticoncreater.model.PictureBean;
 import com.android.emoticoncreater.ui.adapter.SecretListAdapter;
 import com.android.emoticoncreater.utils.FileUtils;
 import com.android.emoticoncreater.utils.SDCardUtils;
@@ -38,7 +38,7 @@ public class TellTheSecretActivity extends BaseActivity {
     private RecyclerView rvSecretList;
     private FloatingActionButton btnAdd;
 
-    private List<SecretBean> mSecretList;
+    private List<PictureBean> mSecretList;
     private SecretListAdapter mSecretAdapter;
 
     private LinearLayoutManager mLayoutManager;
@@ -78,8 +78,8 @@ public class TellTheSecretActivity extends BaseActivity {
         setToolbarBackEnable();
         setToolbarTitle("告诉你个秘密");
 
-        rvSecretList = findViewById(R.id.rv_secret_list);
-        btnAdd = findViewById(R.id.btn_add);
+        rvSecretList = (RecyclerView) findViewById(R.id.rv_secret_list);
+        btnAdd = (FloatingActionButton) findViewById(R.id.btn_add);
 
         rvSecretList.setLayoutManager(mLayoutManager);
         rvSecretList.setAdapter(mSecretAdapter);
@@ -92,7 +92,7 @@ public class TellTheSecretActivity extends BaseActivity {
     @Override
     protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
-        final SecretBean secret = intent.getParcelableExtra(SecretEditActivity.KEY_NEW_SECRET);
+        final PictureBean secret = intent.getParcelableExtra(SecretEditActivity.KEY_NEW_SECRET);
         if (secret != null) {
             final int index = mSecretList.size();
             mSecretList.add(secret);
@@ -141,7 +141,7 @@ public class TellTheSecretActivity extends BaseActivity {
                                 final String filePath = imageFile.getAbsolutePath();
                                 refreshAlbum(imageFile);
 
-                                ShowSecretActivity.show(TellTheSecretActivity.this, filePath);
+                                ShowPictureActivity.show(TellTheSecretActivity.this, filePath);
                             } else {
                                 showSnackbar("生成失败，图片不存在");
                             }

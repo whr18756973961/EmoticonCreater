@@ -26,14 +26,27 @@ public class TripleSendUtils {
     private static final int textHeight = 50;
     private static final int padding = 10;
 
-    public static File createExpression(final String title,
-                                        final String path1,
-                                        final String path2,
-                                        final String path3,
-                                        final String name1,
-                                        final String name2,
-                                        final String name3,
-                                        final String savePath) {
+    private final String title;
+    private final String path1;
+    private final String path2;
+    private final String path3;
+    private final String name1;
+    private final String name2;
+    private final String name3;
+    private final String savePath;
+
+    private TripleSendUtils(Builder builder) {
+        this.title = builder.title;
+        this.path1 = builder.path1;
+        this.path2 = builder.path2;
+        this.path3 = builder.path3;
+        this.name1 = builder.name1;
+        this.name2 = builder.name2;
+        this.name3 = builder.name3;
+        this.savePath = builder.savePath;
+    }
+
+    public File createExpression() {
 
         final Paint paint = new Paint();
         paint.setColor(backgroundColor);
@@ -95,7 +108,7 @@ public class TripleSendUtils {
         return newFile;
     }
 
-    private static Bitmap getBitmapByFilePath(String path) {
+    private Bitmap getBitmapByFilePath(String path) {
         final Bitmap bitmap = BitmapFactory.decodeFile(path);
         final int bitmapWidth = bitmap.getWidth();
         final int bitmapHeight = bitmap.getHeight();
@@ -116,17 +129,76 @@ public class TripleSendUtils {
         return bitmap;
     }
 
-    private static void drawBitmap(Canvas canvas, Bitmap bitmap, int left, int right) {
+    private void drawBitmap(Canvas canvas, Bitmap bitmap, int left, int right) {
         final Rect pictureRect = new Rect(0, 0, pictureWidth, pictureHeight);
         final RectF dst = new RectF(left, textHeight, right, pictureHeight + textHeight);
         canvas.drawBitmap(bitmap, pictureRect, dst, null);
     }
 
-    private static void drawText(Canvas canvas, Paint paint, String text, int left) {
+    private void drawText(Canvas canvas, Paint paint, String text, int left) {
         final Rect nameRect = new Rect();
         paint.getTextBounds(text, 0, text.length(), nameRect);
         final float nameTop = textHeight + pictureHeight + (textHeight - textSize) / 2f - nameRect.top;
         final float nameLeft1 = (pictureWidth - nameRect.right) / 2f + left;
         canvas.drawText(text, nameLeft1, nameTop, paint);
+    }
+
+    public static class Builder {
+        private String title;
+        private String path1;
+        private String path2;
+        private String path3;
+        private String name1;
+        private String name2;
+        private String name3;
+        private String savePath;
+
+        public Builder() {
+
+        }
+
+        public Builder setTitle(String title) {
+            this.title = title;
+            return this;
+        }
+
+        public Builder setPath1(String path1) {
+            this.path1 = path1;
+            return this;
+        }
+
+        public Builder setPath2(String path2) {
+            this.path2 = path2;
+            return this;
+        }
+
+        public Builder setPath3(String path3) {
+            this.path3 = path3;
+            return this;
+        }
+
+        public Builder setName1(String name1) {
+            this.name1 = name1;
+            return this;
+        }
+
+        public Builder setName2(String name2) {
+            this.name2 = name2;
+            return this;
+        }
+
+        public Builder setName3(String name3) {
+            this.name3 = name3;
+            return this;
+        }
+
+        public Builder setSavePath(String savePath) {
+            this.savePath = savePath;
+            return this;
+        }
+
+        public TripleSendUtils bulid() {
+            return new TripleSendUtils(this);
+        }
     }
 }

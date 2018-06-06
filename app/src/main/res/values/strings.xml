@@ -3,6 +3,8 @@
 
     <string name="transition_name_secret">secret</string>
 
+    <string name="transition_name_one_emoticon">one_emoticon</string>
+
     <string name="floating_button_behavior">com.android.emoticoncreater.utils.FloatingButtonBehavior</string>
 
 </resources>

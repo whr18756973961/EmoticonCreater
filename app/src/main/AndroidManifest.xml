@@ -5,12 +5,6 @@
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
-    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
-    <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
-    <uses-permission android:name="android.permission.READ_LOGS" />
-
     <application
         android:name=".app.APP"
         android:allowBackup="true"
@@ -53,7 +47,13 @@
             android:name=".ui.activity.SecretEditActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.activity.ShowSecretActivity"
+            android:name=".ui.activity.ShowPictureActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.activity.OneEmoticonActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.activity.OneEmoticonEditActivity"
             android:screenOrientation="portrait" />
     </application>
 

@@ -4,17 +4,18 @@ import android.app.Activity;
 import android.app.ActivityOptions;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.widget.AppCompatEditText;
+import android.support.v7.widget.AppCompatImageView;
 import android.text.TextUtils;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.android.emoticoncreater.R;
 import com.android.emoticoncreater.app.BaseActivity;
-import com.android.emoticoncreater.model.SecretBean;
+import com.android.emoticoncreater.model.PictureBean;
+import com.android.emoticoncreater.widget.imageloader.ImageLoaderFactory;
 
 /**
  * 编辑秘密
@@ -25,12 +26,12 @@ public class SecretEditActivity extends BaseActivity {
     public static final String KEY_NEW_SECRET = "key_new_secret";
     private static final String KEY_SECRET = "key_secret";
 
-    private ImageView ivPicture;
-    private EditText etTitle;
+    private AppCompatImageView ivPicture;
+    private AppCompatEditText etTitle;
 
-    private SecretBean mSecret;
+    private PictureBean mSecret;
 
-    public static void show(Activity activity, ActivityOptions options, SecretBean secret) {
+    public static void show(Activity activity, ActivityOptions options, PictureBean secret) {
         Intent intent = new Intent();
         intent.setClass(activity, SecretEditActivity.class);
         intent.putExtra(KEY_SECRET, secret);
@@ -56,8 +57,8 @@ public class SecretEditActivity extends BaseActivity {
         setToolbarTitle("添加秘密");
         setToolbarSubTitle("编写你的秘密");
 
-        ivPicture = findViewById(R.id.iv_picture);
-        etTitle = findViewById(R.id.et_title);
+        ivPicture = (AppCompatImageView) findViewById(R.id.iv_picture);
+        etTitle = (AppCompatEditText) findViewById(R.id.et_title);
 
         etTitle.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
@@ -70,6 +71,7 @@ public class SecretEditActivity extends BaseActivity {
             final int resourceId = mSecret.getResourceId();
             final String title = mSecret.getTitle();
 
+            ImageLoaderFactory.getLoader().loadImageFitCenter(this, ivPicture, resourceId, 0, 0);
             ivPicture.setImageResource(resourceId);
             etTitle.setHint(title);
         }

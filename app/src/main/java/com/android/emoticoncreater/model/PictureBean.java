@@ -4,10 +4,10 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 /**
- * 告诉你个秘密
+ * 图片
  */
 
-public class SecretBean implements Parcelable {
+public class PictureBean implements Parcelable {
 
     private int resourceId;
     private String title;
@@ -39,23 +39,23 @@ public class SecretBean implements Parcelable {
         dest.writeString(this.title);
     }
 
-    public SecretBean() {
+    public PictureBean() {
     }
 
-    protected SecretBean(Parcel in) {
+    protected PictureBean(Parcel in) {
         this.resourceId = in.readInt();
         this.title = in.readString();
     }
 
-    public static final Creator<SecretBean> CREATOR = new Creator<SecretBean>() {
+    public static final Creator<PictureBean> CREATOR = new Creator<PictureBean>() {
         @Override
-        public SecretBean createFromParcel(Parcel source) {
-            return new SecretBean(source);
+        public PictureBean createFromParcel(Parcel source) {
+            return new PictureBean(source);
         }
 
         @Override
-        public SecretBean[] newArray(int size) {
-            return new SecretBean[size];
+        public PictureBean[] newArray(int size) {
+            return new PictureBean[size];
         }
     };
 }
