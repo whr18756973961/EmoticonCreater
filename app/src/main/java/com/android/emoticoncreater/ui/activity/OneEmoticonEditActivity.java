@@ -3,6 +3,7 @@ package com.android.emoticoncreater.ui.activity;
 import android.app.Activity;
 import android.app.ActivityOptions;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.widget.AppCompatEditText;
 import android.view.KeyEvent;
@@ -12,9 +13,15 @@ import android.widget.TextView;
 
 import com.android.emoticoncreater.R;
 import com.android.emoticoncreater.app.BaseActivity;
+import com.android.emoticoncreater.config.Constants;
 import com.android.emoticoncreater.model.PictureBean;
+import com.android.emoticoncreater.utils.OneEmoticonHelper;
+import com.android.emoticoncreater.utils.SDCardUtils;
+import com.android.emoticoncreater.utils.ThreadPoolUtil;
 import com.android.emoticoncreater.widget.imageloader.ImageLoaderFactory;
 import com.android.emoticoncreater.widget.imageloader.SquareImageView;
+
+import java.io.File;
 
 public class OneEmoticonEditActivity extends BaseActivity {
 
@@ -24,6 +31,7 @@ public class OneEmoticonEditActivity extends BaseActivity {
     private AppCompatEditText etTitle;
 
     private PictureBean mPicture;
+    private String mSavePath;
 
     public static void show(Activity activity, ActivityOptions options, PictureBean picture) {
         Intent intent = new Intent();
@@ -42,6 +50,7 @@ public class OneEmoticonEditActivity extends BaseActivity {
         super.initData();
 
         mPicture = getIntent().getParcelableExtra(KEY_ONE_EMOTICON);
+        mSavePath = SDCardUtils.getSDCardDir(this) + Constants.PATH_ONE_EMOTICON;
     }
 
     @Override
@@ -85,7 +94,39 @@ public class OneEmoticonEditActivity extends BaseActivity {
         return super.onCreateOptionsMenu(menu);
     }
 
-    private void doCreate() {
+    private void refreshAlbum(File file) {
+        if (file != null && file.exists()) {
+            final Uri uri = Uri.fromFile(file);
+            sendBroadcast(new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE, uri));
+        }
+    }
 
+    private void doCreate() {
+        showProgress("图片处理中...");
+
+        final String text = etTitle.getText().toString();
+        mPicture.setTitle(text);
+
+        ThreadPoolUtil.getInstache().cachedExecute(new Runnable() {
+            @Override
+            public void run() {
+                final File imageFile = OneEmoticonHelper.create(getResources(), mPicture, mSavePath);
+
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        if (imageFile.exists()) {
+                            final String filePath = imageFile.getAbsolutePath();
+                            refreshAlbum(imageFile);
+
+                            ShowPictureActivity.show(OneEmoticonEditActivity.this, filePath);//TODO
+                        } else {
+                            showSnackbar("生成失败，图片不存在");
+                        }
+                        hideProgress();
+                    }
+                });
+            }
+        });
     }
 }

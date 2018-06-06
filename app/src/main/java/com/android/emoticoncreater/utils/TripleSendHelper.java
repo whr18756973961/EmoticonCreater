@@ -14,7 +14,7 @@ import java.io.File;
  * 表情三连发工具类
  */
 
-public class TripleSendUtils {
+public class TripleSendHelper {
 
     private static final int backgroundWidth = 640;
     private static final int backgroundHeight = 300;
@@ -35,7 +35,7 @@ public class TripleSendUtils {
     private final String name3;
     private final String savePath;
 
-    private TripleSendUtils(Builder builder) {
+    private TripleSendHelper(Builder builder) {
         this.title = builder.title;
         this.path1 = builder.path1;
         this.path2 = builder.path2;
@@ -197,8 +197,8 @@ public class TripleSendUtils {
             return this;
         }
 
-        public TripleSendUtils bulid() {
-            return new TripleSendUtils(this);
+        public TripleSendHelper bulid() {
+            return new TripleSendHelper(this);
         }
     }
 }

@@ -24,7 +24,7 @@ import com.android.emoticoncreater.utils.FileUtils;
 import com.android.emoticoncreater.utils.ImageUtils;
 import com.android.emoticoncreater.utils.SDCardUtils;
 import com.android.emoticoncreater.utils.ThreadPoolUtil;
-import com.android.emoticoncreater.utils.TripleSendUtils;
+import com.android.emoticoncreater.utils.TripleSendHelper;
 import com.android.emoticoncreater.widget.imageloader.ImageLoaderFactory;
 
 import java.io.File;
@@ -242,7 +242,7 @@ public class TripleSendActivity extends BaseActivity {
                 @Override
                 public void run() {
 
-                    TripleSendUtils utils = new TripleSendUtils.Builder()
+                    TripleSendHelper utils = new TripleSendHelper.Builder()
                             .setTitle(title)
                             .setPath1(mPath1)
                             .setPath2(mPath2)

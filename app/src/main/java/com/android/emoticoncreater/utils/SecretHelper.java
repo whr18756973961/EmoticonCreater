@@ -18,7 +18,7 @@ import java.util.List;
  * 告诉你个秘密工具类
  */
 
-public class SecretUtils {
+public class SecretHelper {
 
     private static final int padding = 20;//内边距
     private static final int pictureWidth = 500;//图片宽度

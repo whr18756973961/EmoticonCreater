@@ -21,7 +21,7 @@ import com.android.emoticoncreater.model.PictureBean;
 import com.android.emoticoncreater.ui.adapter.SecretListAdapter;
 import com.android.emoticoncreater.utils.FileUtils;
 import com.android.emoticoncreater.utils.SDCardUtils;
-import com.android.emoticoncreater.utils.SecretUtils;
+import com.android.emoticoncreater.utils.SecretHelper;
 import com.android.emoticoncreater.utils.ThreadPoolUtil;
 
 import java.io.File;
@@ -132,7 +132,7 @@ public class TellTheSecretActivity extends BaseActivity {
             ThreadPoolUtil.getInstache().cachedExecute(new Runnable() {
                 @Override
                 public void run() {
-                    final File imageFile = SecretUtils.createSecret(getResources(), mSecretList, mSavePath);
+                    final File imageFile = SecretHelper.createSecret(getResources(), mSecretList, mSavePath);
 
                     runOnUiThread(new Runnable() {
                         @Override
