@@ -8,6 +8,7 @@ import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.graphics.Rect;
 import android.graphics.RectF;
+import android.text.TextUtils;
 
 import com.android.emoticoncreater.model.PictureBean;
 
@@ -26,21 +27,24 @@ public class OneEmoticonHelper {
     private static final int textColor = 0xff010101;
 
     public static File create(Resources resources, final PictureBean emoticon, final String savePath) {
+        final String text = emoticon.getTitle();
+        final int resourceId = emoticon.getResourceId();
+
         final Paint paint = new Paint();
         paint.reset();
         paint.setColor(textColor);
         paint.setTextSize(textSize);
         paint.setFlags(Paint.FAKE_BOLD_TEXT_FLAG | Paint.ANTI_ALIAS_FLAG);
 
+        final Rect textRect = new Rect();
+        paint.getTextBounds(text, 0, text.length(), textRect);
+        final int maxTextWidth = pictureWidth;
+        final int textWidth = textRect.right;
+        final int textHeight = TextUtils.isEmpty(text) ? 0
+                : (textWidth <= maxTextWidth ? textSize : 2 * textSize + padding / 2);
+
         final int totalWidth = padding + pictureWidth + padding;
-        int totalHeight = 0;
-        if (emoticon != null) {
-            totalHeight += padding;
-            totalHeight += pictureHeight;
-            final String text = emoticon.getTitle();
-            totalHeight += getTextHeight(paint, text);
-            totalHeight += padding;
-        }
+        final int totalHeight = padding + pictureHeight + textHeight + padding;
 
         paint.reset();
         paint.setColor(backgroundColor);
@@ -51,42 +55,19 @@ public class OneEmoticonHelper {
         final Canvas canvas = new Canvas(picture);
         canvas.drawRect(background, paint);
 
-        paint.reset();
-        paint.setColor(textColor);
-        paint.setTextSize(textSize);
-        paint.setFlags(Paint.FAKE_BOLD_TEXT_FLAG | Paint.ANTI_ALIAS_FLAG);
+        drawBitmap(resources, canvas, resourceId, padding);
 
-        totalHeight = 0;
-        if (emoticon != null) {
-            final String text = emoticon.getTitle();
-            final int resourceId = emoticon.getResourceId();
-
-            totalHeight += padding;
-
-            drawBitmap(resources, canvas, resourceId, totalHeight);
-
-            totalHeight += pictureHeight;
-
-            final Rect textRect = new Rect();
-            paint.getTextBounds(text, 0, text.length(), textRect);
-
-            final int textWidth = textRect.right;
-            final int maxTextWidth = pictureWidth;
-
+        if (textHeight > 0) {
             if (textWidth <= maxTextWidth) {
-                final float textLeft = (pictureWidth - textWidth) / 2f + padding;
-                final float textTop = totalHeight - textRect.top;
-                canvas.drawText(text, textLeft, textTop, paint);
+                drawText(canvas, paint, text, padding + pictureHeight);
             } else {
                 final float line = textWidth / (float) maxTextWidth;
                 final int count = (int) (text.length() / line);
                 final String text1 = text.substring(0, count);
                 final String text2 = text.substring(count, text.length());
 
-                drawText(canvas, paint, text1, totalHeight);
-                totalHeight += textSize;
-
-                drawText(canvas, paint, text2, totalHeight);
+                drawText(canvas, paint, text1, padding + pictureHeight);
+                drawText(canvas, paint, text2, padding + pictureHeight + textSize + padding / 2);
             }
         }
 
@@ -97,19 +78,12 @@ public class OneEmoticonHelper {
         return newFile;
     }
 
-    private static int getTextHeight(Paint paint, String text) {
-        final Rect textRect = new Rect();
-        paint.getTextBounds(text, 0, text.length(), textRect);
-        final int textWidth = textRect.right;
-        final int maxTextWidth = pictureWidth - padding * 2;
-        if (textWidth <= maxTextWidth) {
-            return textSize;
-        } else {
-            return 2 * textSize + padding / 2;
-        }
-    }
-
     private static void drawText(Canvas canvas, Paint paint, String text, int top) {
+        paint.reset();
+        paint.setColor(textColor);
+        paint.setTextSize(textSize);
+        paint.setFlags(Paint.FAKE_BOLD_TEXT_FLAG | Paint.ANTI_ALIAS_FLAG);
+
         final Rect textRect = new Rect();
         paint.getTextBounds(text, 0, text.length(), textRect);
         final int textWidth = textRect.right;

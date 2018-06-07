@@ -6,8 +6,8 @@ android {
         applicationId "com.android.emoticoncreater"
         minSdkVersion 21
         targetSdkVersion 25
-        versionCode 180223
-        versionName "1.3.2"
+        versionCode 180606
+        versionName "1.4"
     }
     buildTypes {
         debug {
