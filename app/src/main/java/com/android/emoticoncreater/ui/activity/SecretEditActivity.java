@@ -23,7 +23,6 @@ import com.android.emoticoncreater.widget.imageloader.ImageLoaderFactory;
 
 public class SecretEditActivity extends BaseActivity {
 
-    public static final String KEY_NEW_SECRET = "key_new_secret";
     private static final String KEY_SECRET = "key_secret";
 
     private AppCompatImageView ivPicture;
@@ -100,11 +99,7 @@ public class SecretEditActivity extends BaseActivity {
         } else {
             mSecret.setTitle(title);
 
-            Intent intent = new Intent();
-            intent.setClass(this, TellTheSecretActivity.class);
-            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
-            intent.putExtra(KEY_NEW_SECRET, mSecret);
-            startActivity(intent);
+            TellTheSecretActivity.showOnNewIntent(this, mSecret);
         }
     }
 }

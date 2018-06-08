@@ -177,9 +177,7 @@ public class TripleSendActivity extends BaseActivity {
         hideKeyboard();
         int id = item.getItemId();
         if (id == R.id.action_proverb) {
-            Intent intent = new Intent();
-            intent.setClass(this, ThreeProverbListActivity.class);
-            startActivityForResult(intent, REQUEST_CODE_TO_PROVERB);
+            ThreeProverbListActivity.show(this, REQUEST_CODE_TO_PROVERB);
             return true;
         }
         return super.onOptionsItemSelected(item);

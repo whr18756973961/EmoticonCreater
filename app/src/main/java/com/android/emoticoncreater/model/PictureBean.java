@@ -11,6 +11,7 @@ public class PictureBean implements Parcelable {
 
     private int resourceId;
     private String title;
+    private String filePath;
 
     public int getResourceId() {
         return resourceId;
@@ -28,6 +29,14 @@ public class PictureBean implements Parcelable {
         this.title = title;
     }
 
+    public String getFilePath() {
+        return filePath;
+    }
+
+    public void setFilePath(String filePath) {
+        this.filePath = filePath;
+    }
+
     @Override
     public int describeContents() {
         return 0;
@@ -37,6 +46,7 @@ public class PictureBean implements Parcelable {
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeInt(this.resourceId);
         dest.writeString(this.title);
+        dest.writeString(this.filePath);
     }
 
     public PictureBean() {
@@ -45,6 +55,7 @@ public class PictureBean implements Parcelable {
     protected PictureBean(Parcel in) {
         this.resourceId = in.readInt();
         this.title = in.readString();
+        this.filePath = in.readString();
     }
 
     public static final Creator<PictureBean> CREATOR = new Creator<PictureBean>() {

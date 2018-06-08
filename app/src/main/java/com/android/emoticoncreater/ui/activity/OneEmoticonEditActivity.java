@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.widget.AppCompatEditText;
+import android.text.TextUtils;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -32,6 +33,13 @@ public class OneEmoticonEditActivity extends BaseActivity {
 
     private PictureBean mPicture;
     private String mSavePath;
+
+    public static void show(Activity activity, PictureBean picture) {
+        Intent intent = new Intent();
+        intent.setClass(activity, OneEmoticonEditActivity.class);
+        intent.putExtra(KEY_ONE_EMOTICON, picture);
+        activity.startActivity(intent);
+    }
 
     public static void show(Activity activity, ActivityOptions options, PictureBean picture) {
         Intent intent = new Intent();
@@ -72,9 +80,15 @@ public class OneEmoticonEditActivity extends BaseActivity {
         });
 
         if (mPicture != null) {
+            final String filePath = mPicture.getFilePath();
             final int resourceId = mPicture.getResourceId();
 
-            ImageLoaderFactory.getLoader().loadImageFitCenter(this, ivPicture, resourceId, 0, 0);
+            if (!TextUtils.isEmpty(filePath)) {
+                ImageLoaderFactory.getLoader().loadImageFitCenter(this, ivPicture, filePath, 0, 0);
+            } else {
+                ImageLoaderFactory.getLoader().loadImageFitCenter(this, ivPicture, resourceId, 0, 0);
+            }
+
             ivPicture.setImageResource(resourceId);
         }
     }

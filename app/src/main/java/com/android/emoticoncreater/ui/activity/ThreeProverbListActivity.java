@@ -1,5 +1,6 @@
 package com.android.emoticoncreater.ui.activity;
 
+import android.app.Activity;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -32,6 +33,12 @@ public class ThreeProverbListActivity extends BaseActivity {
     private ThreeProverbListAdapter mProverbAdapter;
 
     private LiteOrmHelper mDBHelper;
+
+    public static void show(Activity activity, int requestCode) {
+        Intent intent = new Intent();
+        intent.setClass(activity, ThreeProverbListActivity.class);
+        activity.startActivityForResult(intent, requestCode);
+    }
 
     @Override
     protected int getContentView() {

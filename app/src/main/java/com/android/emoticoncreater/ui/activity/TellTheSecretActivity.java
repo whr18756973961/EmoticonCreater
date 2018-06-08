@@ -35,6 +35,8 @@ import java.util.List;
 
 public class TellTheSecretActivity extends BaseActivity {
 
+    private static final String KEY_NEW_SECRET = "key_new_secret";
+
     private RecyclerView rvSecretList;
     private FloatingActionButton btnAdd;
 
@@ -45,6 +47,14 @@ public class TellTheSecretActivity extends BaseActivity {
     private ItemTouchHelper mItemTouchHelper;
 
     private String mSavePath;
+
+    public static void showOnNewIntent(Activity activity, PictureBean secret) {
+        Intent intent = new Intent();
+        intent.setClass(activity, TellTheSecretActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+        intent.putExtra(KEY_NEW_SECRET, secret);
+        activity.startActivity(intent);
+    }
 
     public static void show(Activity activity) {
         Intent intent = new Intent();
@@ -92,7 +102,7 @@ public class TellTheSecretActivity extends BaseActivity {
     @Override
     protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
-        final PictureBean secret = intent.getParcelableExtra(SecretEditActivity.KEY_NEW_SECRET);
+        final PictureBean secret = intent.getParcelableExtra(KEY_NEW_SECRET);
         if (secret != null) {
             final int index = mSecretList.size();
             mSecretList.add(secret);
