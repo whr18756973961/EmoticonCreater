@@ -104,15 +104,8 @@ public class OneEmoticonEditActivity extends BaseActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_create_secret, menu);
+        getMenuInflater().inflate(R.menu.menu_confirm_create, menu);
         return super.onCreateOptionsMenu(menu);
-    }
-
-    private void refreshAlbum(File file) {
-        if (file != null && file.exists()) {
-            final Uri uri = Uri.fromFile(file);
-            sendBroadcast(new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE, uri));
-        }
     }
 
     private void doCreate() {
@@ -131,7 +124,9 @@ public class OneEmoticonEditActivity extends BaseActivity {
                     public void run() {
                         if (imageFile.exists()) {
                             final String filePath = imageFile.getAbsolutePath();
-                            refreshAlbum(imageFile);
+
+                            final Uri uri = Uri.fromFile(imageFile);
+                            sendBroadcast(new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE, uri));
 
                             ShowPictureActivity.show(OneEmoticonEditActivity.this, filePath);//TODO
                         } else {

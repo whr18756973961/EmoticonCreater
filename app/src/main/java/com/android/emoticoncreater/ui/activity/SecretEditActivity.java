@@ -88,7 +88,7 @@ public class SecretEditActivity extends BaseActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_create_secret, menu);
+        getMenuInflater().inflate(R.menu.menu_confirm_create, menu);
         return super.onCreateOptionsMenu(menu);
     }
 

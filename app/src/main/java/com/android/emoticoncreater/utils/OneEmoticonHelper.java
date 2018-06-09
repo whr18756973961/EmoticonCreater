@@ -59,7 +59,7 @@ public class OneEmoticonHelper {
 
         if (textHeight > 0) {
             if (textWidth <= maxTextWidth) {
-                drawText(canvas, paint, text, padding + pictureHeight + padding);
+                drawText(canvas, paint, text, padding + pictureHeight + textPaddingTop);
             } else {
                 final float line = textWidth / (float) maxTextWidth;
                 final int count = (int) (text.length() / line);

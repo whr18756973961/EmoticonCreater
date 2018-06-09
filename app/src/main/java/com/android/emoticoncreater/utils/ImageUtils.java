@@ -9,6 +9,7 @@ import android.os.Build;
 import android.provider.MediaStore;
 import android.support.v4.content.FileProvider;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 
@@ -17,6 +18,23 @@ import java.io.FileOutputStream;
  */
 
 public class ImageUtils {
+
+    public static File saveToGif(final ByteArrayOutputStream os, String path, String fileName) {
+        File file = new File(path);
+        try {
+            if (!file.exists()) {
+                file.mkdir();
+            }
+            file = new File(path, fileName);
+            FileOutputStream out = new FileOutputStream(file);
+            out.write(os.toByteArray());
+            out.flush();
+            out.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return file;
+    }
 
     public static File saveBitmapToJpg(Bitmap bitmap, String path, String bitName) {
         File file = new File(path);

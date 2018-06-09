@@ -1,0 +1,107 @@
+[
+  {
+    "id": 1,
+    "name": "为所欲为",
+    "fileName": "img_weisuoyuwei.gif",
+    "textList": [
+      {
+        "id": 1,
+        "hint": "好啊",
+        "text": "",
+        "startFrame": 7,
+        "endFrame": 15
+      },
+      {
+        "id": 2,
+        "hint": "我是一等良民就不说了",
+        "text": "",
+        "startFrame": 24,
+        "endFrame": 40
+      },
+      {
+        "id": 3,
+        "hint": "即使一定要冤枉我",
+        "text": "",
+        "startFrame": 41,
+        "endFrame": 60
+      },
+      {
+        "id": 4,
+        "hint": "我也有钱聘请大律师帮我",
+        "text": "",
+        "startFrame": 61,
+        "endFrame": 80
+      },
+      {
+        "id": 5,
+        "hint": "我看我别指望坐牢了",
+        "text": "",
+        "startFrame": 81,
+        "endFrame": 92
+      },
+      {
+        "id": 6,
+        "hint": "你别以为有钱就能为所欲为",
+        "text": "",
+        "startFrame": 93,
+        "endFrame": 105
+      },
+      {
+        "id": 7,
+        "hint": "抱歉，有钱是真的能为所欲为的",
+        "text": "",
+        "startFrame": 111,
+        "endFrame": 132
+      },
+      {
+        "id": 8,
+        "hint": "但我看他领会不到这样的意境",
+        "text": "",
+        "startFrame": 149,
+        "endFrame": 161
+      },
+      {
+        "id": 9,
+        "hint": "领会不到",
+        "text": "",
+        "startFrame": 162,
+        "endFrame": 173
+      }
+    ]
+  },
+  {
+    "id": 1,
+    "name": "铁骨铮铮",
+    "fileName": "img_tieguzhengzheng.gif",
+    "textList": [
+      {
+        "id": 1,
+        "hint": "我王境泽就是饿死",
+        "text": "",
+        "startFrame": 1,
+        "endFrame": 10
+      },
+      {
+        "id": 2,
+        "hint": "死外边，从这里跳下去",
+        "text": "",
+        "startFrame": 11,
+        "endFrame": 22
+      },
+      {
+        "id": 3,
+        "hint": "不会吃你们一点东西",
+        "text": "",
+        "startFrame": 23,
+        "endFrame": 33
+      },
+      {
+        "id": 4,
+        "hint": "真香",
+        "text": "",
+        "startFrame": 34,
+        "endFrame": 44
+      }
+    ]
+  }
+]

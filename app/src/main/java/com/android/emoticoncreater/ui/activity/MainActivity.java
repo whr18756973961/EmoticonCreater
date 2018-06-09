@@ -29,6 +29,7 @@ public class MainActivity extends BaseActivity {
     private Button btnTripleSend;
     private Button btnSecret;
     private Button btnOneEmoticon;
+    private Button btnGif;
 
     private int permissionPosition = 0;//当前请求权限位置
     private String[] permissions;
@@ -74,6 +75,7 @@ public class MainActivity extends BaseActivity {
         btnTripleSend = (Button) findViewById(R.id.btn_triple_send);
         btnSecret = (Button) findViewById(R.id.btn_secret);
         btnOneEmoticon = (Button) findViewById(R.id.btn_one_emoticon);
+        btnGif = (Button) findViewById(R.id.btn_gif);
 
         requestPermission();
     }
@@ -82,6 +84,7 @@ public class MainActivity extends BaseActivity {
         btnTripleSend.setOnClickListener(mClick);
         btnSecret.setOnClickListener(mClick);
         btnOneEmoticon.setOnClickListener(mClick);
+        btnGif.setOnClickListener(mClick);
 
         final String basePath = SDCardUtils.getSDCardDir(this) + Constants.PATH_BASE;
         if (!FileUtils.createdirectory(basePath)) {
@@ -172,6 +175,9 @@ public class MainActivity extends BaseActivity {
                     break;
                 case R.id.btn_one_emoticon:
                     OneEmoticonActivity.show(MainActivity.this);
+                    break;
+                case R.id.btn_gif:
+                    GifThemeListActivity.show(MainActivity.this);
                     break;
             }
         }

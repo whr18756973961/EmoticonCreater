@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="50dp"
+    android:gravity="center_vertical"
+    android:paddingEnd="20dp"
+    android:paddingStart="20dp">
+
+    <TextView
+        android:id="@+id/tv_tips"
+        android:layout_width="wrap_content"
+        android:layout_height="40dp"
+        android:gravity="center"
+        android:textColor="@color/black"
+        android:textSize="14sp"
+        tools:text="第1句：" />
+
+    <EditText
+        android:id="@+id/et_text"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:imeOptions="actionNext"
+        android:inputType="text"
+        android:maxLength="18"
+        android:maxLines="1"
+        android:textColor="@color/black"
+        android:textSize="14sp"
+        tools:hint="抱歉，有钱真的能为所欲为" />
+
+</LinearLayout>

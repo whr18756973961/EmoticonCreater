@@ -17,7 +17,7 @@ public class DefaultProgressDialog {
         if (progressDialog == null) {
             progressDialog = new ProgressDialog(ctx);
         }
-        progressDialog.setCancelable(true);
+        progressDialog.setCancelable(false);
         progressDialog.setCanceledOnTouchOutside(false);
 
         progressDialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
