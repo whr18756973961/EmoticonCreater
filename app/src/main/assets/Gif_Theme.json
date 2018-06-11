@@ -3,69 +3,72 @@
     "id": 1,
     "name": "为所欲为",
     "fileName": "img_weisuoyuwei.gif",
+    "textSize": 18,
+    "maxLength": 12,
+    "duration": 200,
     "textList": [
       {
         "id": 1,
         "hint": "好啊",
         "text": "",
-        "startFrame": 7,
-        "endFrame": 15
+        "startFrame": 6,
+        "endFrame": 13
       },
       {
         "id": 2,
         "hint": "我是一等良民就不说了",
         "text": "",
-        "startFrame": 24,
-        "endFrame": 40
+        "startFrame": 19,
+        "endFrame": 31
       },
       {
         "id": 3,
         "hint": "即使一定要冤枉我",
         "text": "",
-        "startFrame": 41,
-        "endFrame": 60
+        "startFrame": 33,
+        "endFrame": 45
       },
       {
         "id": 4,
         "hint": "我也有钱聘请大律师帮我",
         "text": "",
-        "startFrame": 61,
-        "endFrame": 80
+        "startFrame": 47,
+        "endFrame": 59
       },
       {
         "id": 5,
         "hint": "我看我别指望坐牢了",
         "text": "",
-        "startFrame": 81,
-        "endFrame": 92
+        "startFrame": 61,
+        "endFrame": 70
       },
       {
         "id": 6,
         "hint": "你别以为有钱就能为所欲为",
         "text": "",
-        "startFrame": 93,
-        "endFrame": 105
+        "startFrame": 71,
+        "endFrame": 80
       },
       {
         "id": 7,
-        "hint": "抱歉，有钱是真的能为所欲为的",
+        "hint": "抱歉，有钱真的能为所欲为",
         "text": "",
-        "startFrame": 111,
-        "endFrame": 132
+        "startFrame": 84,
+        "endFrame": 101
       },
       {
         "id": 8,
-        "hint": "但我看他领会不到这样的意境",
+        "hint": "我看他领会不到这样的意境",
         "text": "",
-        "startFrame": 149,
-        "endFrame": 161
+        "startFrame": 113,
+        "endFrame": 121
       },
       {
         "id": 9,
         "hint": "领会不到",
         "text": "",
-        "startFrame": 162,
-        "endFrame": 173
+        "startFrame": 122,
+        "endFrame": 130
       }
     ]
   },
@@ -73,12 +76,15 @@
     "id": 1,
     "name": "铁骨铮铮",
     "fileName": "img_tieguzhengzheng.gif",
+    "textSize": 22,
+    "maxLength": 16,
+    "duration": 150,
     "textList": [
       {
         "id": 1,
-        "hint": "我王境泽就是饿死",
+        "hint": "我就是饿死",
         "text": "",
-        "startFrame": 1,
+        "startFrame": 0,
         "endFrame": 10
       },
       {

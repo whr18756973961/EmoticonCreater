@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.text.InputFilter;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -106,7 +107,10 @@ public class GifEditActivity extends BaseActivity {
         if (mTheme != null) {
             final String name = mTheme.getName();
             final String fileName = mTheme.getFileName();
+            final int maxLength = mTheme.getMaxLength();
+            final InputFilter[] filters = {new InputFilter.LengthFilter(maxLength)};
             final List<GifText> textList = mTheme.getTextList();
+
             setToolbarTitle(name);
 
             try {
@@ -130,6 +134,7 @@ public class GifEditActivity extends BaseActivity {
 
                     tvTips.setText(tips);
                     etText.setHint(hint);
+                    etText.setFilters(filters);
                     mEditTextList.add(etText);
 
                     llContent.addView(view);

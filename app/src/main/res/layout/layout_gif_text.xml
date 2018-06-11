@@ -22,7 +22,7 @@
         android:layout_height="40dp"
         android:imeOptions="actionNext"
         android:inputType="text"
-        android:maxLength="18"
+        android:maxLength="16"
         android:maxLines="1"
         android:textColor="@color/black"
         android:textSize="14sp"

@@ -13,6 +13,9 @@ public class GifTheme implements Parcelable {
     private long id;//主题ID
     private String name;//主题名称
     private String fileName;//主题文件名
+    private float textSize;//文字大小
+    private int maxLength;//文字最大数量
+    private int duration;//每张图间隔时间
     private List<GifText> textList;//文字列表
 
     public long getId() {
@@ -39,6 +42,30 @@ public class GifTheme implements Parcelable {
         this.fileName = fileName;
     }
 
+    public float getTextSize() {
+        return textSize;
+    }
+
+    public void setTextSize(float textSize) {
+        this.textSize = textSize;
+    }
+
+    public int getMaxLength() {
+        return maxLength;
+    }
+
+    public void setMaxLength(int maxLength) {
+        this.maxLength = maxLength;
+    }
+
+    public int getDuration() {
+        return duration;
+    }
+
+    public void setDuration(int duration) {
+        this.duration = duration;
+    }
+
     public List<GifText> getTextList() {
         return textList;
     }
@@ -57,6 +84,9 @@ public class GifTheme implements Parcelable {
         dest.writeLong(this.id);
         dest.writeString(this.name);
         dest.writeString(this.fileName);
+        dest.writeFloat(this.textSize);
+        dest.writeInt(this.maxLength);
+        dest.writeInt(this.duration);
         dest.writeTypedList(this.textList);
     }
 
@@ -67,6 +97,9 @@ public class GifTheme implements Parcelable {
         this.id = in.readLong();
         this.name = in.readString();
         this.fileName = in.readString();
+        this.textSize = in.readFloat();
+        this.maxLength = in.readInt();
+        this.duration = in.readInt();
         this.textList = in.createTypedArrayList(GifText.CREATOR);
     }
 

@@ -21,14 +21,14 @@ import pl.droidsonroids.gif.GifDrawable;
  */
 public class GifHelper {
 
-    private static final int DURATION = 150;//每张图间隔时间
-    private static final float textSize = 15f;//字体大小
     private static final int padding = 5;//内边距
-    private static final int textColor = 0xffffffff;
+    private static final int textColor = 0xfffafafa;
 
     public static File create(AssetManager assetManager, GifTheme theme, String savePath) {
         try {
             final String gifFileName = theme.getFileName();
+            final float textSize = theme.getTextSize();
+            final int duration = theme.getDuration();
             final List<GifText> textList = theme.getTextList();
 
             final GifDrawable drawable = new GifDrawable(assetManager, gifFileName);
@@ -39,7 +39,7 @@ public class GifHelper {
             final Paint paint = new Paint();
 
             encoder.setRepeat(0);
-            encoder.setDelay(DURATION);
+            encoder.setDelay(duration);
             encoder.start(os);
 
             for (int i = 0; i < frames; i++) {
